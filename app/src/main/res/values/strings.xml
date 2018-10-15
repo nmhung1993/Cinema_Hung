@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Cinema_Hung</string>
+    <string name="upload">Upload</string>
+
+    <string name="chonanh">Chọn ảnh</string>
+    <string name="tenphim">Tên phim</string>
+    <string name="theloai">Thể loại</string>
+    <string name="ngayphathanh">Ngày phát hành</string>
+    <string name="mota">Mô tả</string>
+    <string name="taophim">Tạo phim</string>
 </resources>
