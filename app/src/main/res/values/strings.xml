@@ -8,4 +8,12 @@
     <string name="ngayphathanh">Ngày phát hành</string>
     <string name="mota">Mô tả</string>
     <string name="taophim">Tạo phim</string>
+
+    <string-array name="theloai">
+        <item>Hành Động</item>
+        <item>Tâm Lý</item>
+        <item>Kinh Dị</item>
+        <item>Khoa Học Viễn Tưởng</item>
+        <item>Hài</item>
+    </string-array>
 </resources>
