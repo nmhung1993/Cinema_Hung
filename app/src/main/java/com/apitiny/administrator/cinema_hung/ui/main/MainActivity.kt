@@ -1,5 +1,6 @@
 package com.apitiny.administrator.cinema_hung.ui.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -12,6 +13,12 @@ import com.apitiny.administrator.cinema_hung.di.module.ActivityModule
 import com.apitiny.administrator.cinema_hung.ui.about.AboutFragment
 import com.apitiny.administrator.cinema_hung.ui.list.ListFragment
 import javax.inject.Inject
+
+//import android.support.v7.widget.SearchView
+import android.app.SearchManager
+import android.provider.ContactsContract
+import android.widget.SearchView
+import android.widget.SearchView.OnQueryTextListener;
 
 class MainActivity: AppCompatActivity(), MainContract.View {
 
@@ -28,16 +35,16 @@ class MainActivity: AppCompatActivity(), MainContract.View {
 
     override fun onResume() {
         super.onResume()
-        test()
+        showUploadPage()
     }
 
     override fun showAboutFragment() {
         if (supportFragmentManager.findFragmentByTag(AboutFragment.TAG) == null) {
-            supportFragmentManager.beginTransaction()
-                    .addToBackStack(null)
-                    .setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
-                    .replace(R.id.frame, AboutFragment().newInstance(), AboutFragment.TAG)
-                    .commit()
+            //supportFragmentManager.beginTransaction()
+                    //.addToBackStack(null)
+                    //.setCustomAnimations(AnimType.FADE.getAnimPair().first, AnimType.FADE.getAnimPair().second)
+                    //.replace(R.id.frame, AboutFragment().newInstance(), AboutFragment.TAG)
+                    //.commit()
         } else {
             // Maybe an animation like shake hello text
         }
@@ -58,9 +65,44 @@ class MainActivity: AppCompatActivity(), MainContract.View {
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId) {
-            R.id.nav_item_info -> {
-                presenter.onDrawerOptionAboutClick()
-                return true
+            R.id.search_button-> {
+                //val searchView: SearchView = item?.actionView as SearchView
+                val searchView: SearchView = item?.actionView as SearchView
+                
+                //auto expand và focus
+                searchView.onActionViewExpanded()
+                searchView.requestFocus()
+
+                val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+                searchView.setOnSearchClickListener {
+                    //loadQuery("null")
+                }
+                searchView.setOnQueryTextListener(object : OnQueryTextListener {
+
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        if (query != null) {
+                            //if (query.isNotEmpty()) loadQuery("%$query%")
+                            //if (query.isEmpty()) loadQuery("null")
+                        }
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        if (newText != null) {
+                            //if (newText.length > 1) loadQuery("%$newText%")
+                            //if (newText.isEmpty()) loadQuery("null")
+                        }
+                        return false
+                    }
+                })
+                searchView.setOnCloseListener {
+                    //loadQuery("%")
+                    false
+                }
+                    //presenter.onDrawerOptionAboutClick()
+                    //return true
             }
             else -> {
 
@@ -89,13 +131,12 @@ class MainActivity: AppCompatActivity(), MainContract.View {
         activityComponent.inject(this)
     }
 
-    private fun test() {
+    private fun showUploadPage() {
         val uploadButton = findViewById<Button>(R.id.upload)
         uploadButton.setOnClickListener{
             val intent = Intent(applicationContext, Upload::class.java)
             startActivity(intent)
         }
-        //hello.setText("Hello world with kotlin extensions")
     }
 
     enum class AnimType() {

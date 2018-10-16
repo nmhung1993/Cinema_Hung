@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Cinema_Hung</string>
+    <string name="app_name">Danh Sách Phim</string>
     <string name="upload">Upload</string>
 
     <string name="chonanh">Chọn ảnh</string>
@@ -23,7 +23,7 @@
 
     <!-- About text -->
     <string name="info">Info</string>
-    <string name="about_text">
-        Cinema training project
-    </string>
+    <string name="about_text">Cinema training project</string>
+
+    <string name="srch">Search</string>
 </resources>
