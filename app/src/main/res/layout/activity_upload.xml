@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <ImageView
+        android:id="@+id/imgFilm"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:padding="5dp" />
+
+    <Button
+        android:id="@+id/btnChonAnh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="10sp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/chonanh"
+        android:textSize="18sp"
+        android:typeface="serif"
+        android:textColor="@color/white"
+        android:background="@drawable/round_shape_btn"/>
+
+    <TextView
+        android:id="@+id/tvname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="10sp"
+        android:padding="5dp"
+        android:text="@string/tenphim"
+        android:textSize="18sp"
+        android:typeface="serif"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:fontFamily="serif"
+        android:inputType="textPersonName"
+        android:lineSpacingExtra="10sp"
+        android:padding="5dp"
+        android:textStyle="italic"
+        android:typeface="serif"
+        android:focusedByDefault="false"/>
+
+    <TextView
+        android:id="@+id/tvtheloai"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="10sp"
+
+        android:text="@string/theloai"
+        android:textSize="18sp"
+        android:typeface="serif" />
+
+    <Spinner
+        android:id="@+id/genre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/theloai"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/tvreleaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="10sp"
+        android:padding="5dp"
+        android:text="@string/ngayphathanh"
+        android:textSize="18sp"
+        android:typeface="serif" />
+
+    <EditText
+        android:id="@+id/releaseDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="false"
+        android:fontFamily="serif"
+        android:inputType="date"
+        android:lineSpacingExtra="10sp"
+        android:onClick="openPickerDate"
+        android:padding="5dp"
+        android:text="01/01/2018"
+        android:textStyle="italic"
+        android:typeface="serif" />
+
+    <TextView
+        android:id="@+id/tvcontent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:lineSpacingExtra="10sp"
+        android:padding="5dp"
+        android:text="@string/mota"
+        android:textSize="18sp"
+        android:typeface="serif" />
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:fontFamily="serif"
+        android:gravity="start"
+        android:inputType="textCapSentences|textMultiLine"
+        android:lineSpacingExtra="10sp"
+        android:maxLength="2000"
+        android:maxLines="8"
+        android:padding="5dp"
+        android:scrollHorizontally="false"
+        android:scrollbars="vertical"
+        android:textSize="18sp"
+        android:typeface="serif" />
+
+    <Button
+        android:id="@+id/btnUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="serif"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:lineSpacingExtra="10sp"
+        android:text="@string/taophim"
+        android:textSize="18sp"
+        android:typeface="serif"
+        android:textColor="@color/white"
+        android:background="@drawable/round_shape_btn"/>
+</LinearLayout>

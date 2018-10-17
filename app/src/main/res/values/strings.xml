@@ -8,6 +8,7 @@
     <string name="ngayphathanh">Ngày phát hành</string>
     <string name="mota">Mô tả</string>
     <string name="taophim">Tạo phim</string>
+    <string name="films">Phim</string>
 
     <string-array name="theloai">
         <item>Hành Động</item>
@@ -26,4 +27,7 @@
     <string name="about_text">Cinema training project</string>
 
     <string name="srch">Search</string>
+
+    <color name="grey">#212121</color>
+    <color name="white">#ffffff</color>
 </resources>
