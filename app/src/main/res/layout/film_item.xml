@@ -48,11 +48,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/ic_film" />
 
                     <TextView
                         android:id="@+id/genre"
@@ -70,11 +70,11 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="15dp"
-                        android:layout_height="15dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@drawable/ic_releasedate" />
 
                     <TextView
                         android:id="@+id/releaseDate"
@@ -93,11 +93,11 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:src="@drawable/ic_creator" />
 
                 <TextView
                     android:id="@+id/creatorId"

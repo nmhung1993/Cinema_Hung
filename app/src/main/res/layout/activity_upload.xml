@@ -14,8 +14,7 @@
             android:id="@+id/imgFilm"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:padding="5dp"
-            android:background="@drawable/round_shape_txt"/>
+            android:padding="5dp" />
 
         <Button
             android:id="@+id/btnChonAnh"
@@ -47,7 +46,7 @@
             android:typeface="serif" />
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/name_ed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -59,6 +58,7 @@
             android:padding="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:text=""
             android:typeface="serif" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:typeface="serif" />
 
         <Spinner
-            android:id="@+id/genre"
+            android:id="@+id/genre_sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -100,7 +100,7 @@
             android:typeface="serif" />
 
         <EditText
-            android:id="@+id/releaseDate"
+            android:id="@+id/releaseDate_ed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -113,7 +113,7 @@
             android:padding="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="--/--/----"
+            android:text="01/01/2018"
             android:typeface="serif" />
 
         <TextView
@@ -130,7 +130,7 @@
             android:typeface="serif" />
 
         <EditText
-            android:id="@+id/content"
+            android:id="@+id/content_ed"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="5dp"
@@ -149,6 +149,7 @@
             android:paddingRight="20dp"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
+            android:text=""
             android:textSize="18sp"
             android:typeface="serif" />
 

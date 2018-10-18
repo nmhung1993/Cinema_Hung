@@ -2,9 +2,9 @@ package com.apitiny.administrator.cinema_hung.api
 
 import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
-import retrofit2.http.GET
-import retrofit2.http.Multipart
-import retrofit2.http.POST
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.http.*
 import rx.Observable
 
 interface WebServiceInterface {
@@ -14,6 +14,8 @@ interface WebServiceInterface {
 
     @Multipart
     @POST("cinema")
-    fun postFilm(): Observable<FilmModel>
-
+    fun postFilm(
+        @PartMap body: HashMap<String, RequestBody>,
+        @Part file: MultipartBody.Part)
+        : Observable<FilmModel>
 }

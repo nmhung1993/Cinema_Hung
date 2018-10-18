@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     //get List Phim
     fun getListFilm (){
-            ApiProvider().callApi(object : ApiResult {
+            ApiProvider().callApiGet(object : ApiResult {
                 override fun onError(e: Exception) {
                     Toast.makeText(applicationContext,"Không thể lấy được phim",Toast.LENGTH_SHORT).show()
                     Log.e(TAG, e.message)
@@ -115,5 +115,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    //khi quay lại sẽ get lại list film
+    override fun onResume() {
+        super.onResume()
+        getListFilm()
     }
 }
