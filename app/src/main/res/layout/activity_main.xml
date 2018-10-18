@@ -21,22 +21,18 @@
         android:layout_height="56dp"
         android:layout_alignBottom="@id/rv_film_list"
         android:layout_alignRight="@id/rv_film_list"
-        android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/ripple_oval"
-        android:elevation="8dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:background="@drawable/ic_upload"
+        android:elevation="8dp" />
+
     <ImageButton
         android:id="@+id/btnSignin"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_alignBottom="@id/rv_film_list"
         android:layout_alignLeft="@id/rv_film_list"
-        android:layout_marginBottom="16dp"
         android:layout_marginLeft="16dp"
-        android:background="@drawable/ripple_oval"
-        android:elevation="8dp"
-        android:src="@android:drawable/ic_input_add" />
+        android:background="@drawable/ic_creator" />
 
 <!--    <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnUpload"
@@ -44,7 +40,7 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:src="@drawable/ic_upload"
-        android:text="Upload"
+        android:text="UploadActivity"
         android:layout_alignBottom="@id/rv_film_list"
         android:layout_alignRight="@id/rv_film_list"
         android:layout_margin="15dp"/>-->

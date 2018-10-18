@@ -22,7 +22,8 @@
 
             <ImageView
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:background="@drawable/ic_mail" />
 
             <EditText
                 android:id="@+id/email_ed"
@@ -50,7 +51,8 @@
 
             <ImageView
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:background="@drawable/ic_user" />
 
             <EditText
                 android:id="@+id/name_ed"
@@ -78,7 +80,8 @@
 
             <ImageView
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:background="@drawable/ic_password" />
 
             <EditText
                 android:id="@+id/password_ed"
@@ -108,7 +111,8 @@
 
             <ImageView
                 android:layout_width="40dp"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:background="@drawable/ic_password" />
 
             <EditText
                 android:id="@+id/repassword_ed"
