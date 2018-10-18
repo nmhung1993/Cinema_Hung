@@ -1,4 +1,4 @@
-package com.apitiny.administrator.cinema_hung
+package com.apitiny.administrator.cinema_hung.activity
 
 import android.Manifest
 import android.app.AlertDialog
@@ -6,6 +6,7 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Typeface
 import android.media.MediaScannerConnection
 import android.os.Bundle
 import android.os.Environment
@@ -16,13 +17,13 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.api.ApiProvider
 import com.apitiny.administrator.cinema_hung.api.ApiResult
 import com.apitiny.administrator.cinema_hung.model.BaseModel
 import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_upload.*
-import kotlinx.android.synthetic.main.film_item.*
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -39,6 +40,7 @@ import kotlin.collections.HashMap
 class Upload : AppCompatActivity() {
 
 
+    var tv : TextView ?= null
     var filesrc : File? = null
     private var btn: Button? = null
     private var btnup: Button? = null
@@ -50,6 +52,11 @@ class Upload : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upload)
+
+//        tv = findViewById(R.id.tv_test) as TextView
+//        var font : Typeface = Typeface.createFromAsset(getAssets(),"font/fontawesome_awesome.ttf")
+//        tv!!.setTypeface(font)
+////        tv!!.text = "\f03d"
 
         btn = findViewById<View>(R.id.btnChonAnh) as Button
         imageview = findViewById<View>(R.id.imgFilm) as ImageView

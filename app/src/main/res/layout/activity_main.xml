@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.apitiny.administrator.cinema_hung.MainActivity">
+    tools:context="com.apitiny.administrator.cinema_hung.activity.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_film_list"
@@ -23,6 +23,17 @@
         android:layout_alignRight="@id/rv_film_list"
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
+        android:background="@drawable/ripple_oval"
+        android:elevation="8dp"
+        android:src="@android:drawable/ic_input_add" />
+    <ImageButton
+        android:id="@+id/btnSignin"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_alignBottom="@id/rv_film_list"
+        android:layout_alignLeft="@id/rv_film_list"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="16dp"
         android:background="@drawable/ripple_oval"
         android:elevation="8dp"
         android:src="@android:drawable/ic_input_add" />

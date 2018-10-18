@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Danh Sách Phim</string>
+    <string name="app_name">Cinema Project</string>
+    <string name="main_activity">Danh Sách Phim</string>
+    <string name="upload_activity">Upload Phim</string>
+    <string name="signin_activity">Đăng Nhập</string>
+    <string name="signup_activity">Đăng Ký</string>
     <string name="upload">Upload</string>
 
     <string name="chonanh">Chọn ảnh</string>
@@ -9,6 +13,13 @@
     <string name="mota">Mô tả</string>
     <string name="taophim">Tạo phim</string>
     <string name="films">Phim</string>
+
+    <string name="name">Nhập tên của bạn</string>
+    <string name="email">Nhập địa chỉ Email</string>
+    <string name="password">Nhập mật khẩu</string>
+    <string name="repassword">Nhập lại mật khẩu</string>
+    <string name="btnSignin">Đăng Nhập</string>
+    <string name="btnSignup">Đăng Ký</string>
 
     <string-array name="theloai">
         <item>Hành Động</item>

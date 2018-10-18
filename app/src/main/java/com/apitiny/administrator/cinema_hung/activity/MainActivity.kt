@@ -1,4 +1,4 @@
-package com.apitiny.administrator.cinema_hung
+package com.apitiny.administrator.cinema_hung.activity
 
 import android.app.SearchManager
 import android.content.Context
@@ -11,6 +11,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.Toast
+import com.apitiny.administrator.cinema_hung.R
+import com.apitiny.administrator.cinema_hung.adapter.FilmAdapter
 import com.apitiny.administrator.cinema_hung.api.ApiProvider
 import com.apitiny.administrator.cinema_hung.api.ApiResult
 import com.apitiny.administrator.cinema_hung.model.BaseModel
@@ -32,6 +34,11 @@ class MainActivity : AppCompatActivity() {
         rv_film_list.layoutManager = LinearLayoutManager(this)
         filmAdapter = FilmAdapter(listFilm, this)
         rv_film_list.adapter = filmAdapter
+
+        btnSignin.setOnClickListener{
+            val intent = Intent(applicationContext, SigninActivity::class.java)
+            startActivity(intent)
+        }
 
         btnUpload.setOnClickListener{
             val intent = Intent(applicationContext, Upload::class.java)
@@ -74,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item!!.itemId) {
-            R.id.btnSearch-> {
+            R.id.btnSearch -> {
                 val searchView: SearchView = item?.actionView as SearchView
                 searchView.onActionViewExpanded()
                 searchView.requestFocus()
