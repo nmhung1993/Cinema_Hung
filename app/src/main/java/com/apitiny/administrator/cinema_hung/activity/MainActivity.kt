@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnUpload.setOnClickListener{
-            val intent = Intent(applicationContext, Upload::class.java)
+            val intent = Intent(applicationContext, UploadActivity::class.java)
             startActivity(intent)
         }
 

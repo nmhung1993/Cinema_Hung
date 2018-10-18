@@ -55,8 +55,8 @@ class ApiProvider {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Subscriber<FilmModel>() {
                         override fun onCompleted() {
-                            Toast.makeText(context, "Upload thành công!", Toast.LENGTH_SHORT).show()
-                            // get activity để kết thúc Upload Activity
+                            Toast.makeText(context, "UploadActivity thành công!", Toast.LENGTH_SHORT).show()
+                            // get activity để kết thúc UploadActivity Activity
                             val activity : Activity  = context as Activity
                             activity.finish()
 

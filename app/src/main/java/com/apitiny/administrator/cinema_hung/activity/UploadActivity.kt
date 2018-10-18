@@ -6,7 +6,6 @@ import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.Typeface
 import android.media.MediaScannerConnection
 import android.os.Bundle
 import android.os.Environment
@@ -37,7 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
-class Upload : AppCompatActivity() {
+class UploadActivity : AppCompatActivity() {
 
 
     var tv : TextView ?= null
@@ -207,13 +206,13 @@ class Upload : AppCompatActivity() {
                 {
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     val path = saveImage(bitmap)
-                    Toast.makeText(this@Upload, "Image Saved!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@UploadActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
                     imageview!!.setImageBitmap(bitmap)
 
                 }
                 catch (e: IOException) {
                     e.printStackTrace()
-                    Toast.makeText(this@Upload, "Failed!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@UploadActivity, "Failed!", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -225,7 +224,7 @@ class Upload : AppCompatActivity() {
                 val thumbnail = data!!.extras!!.get("data") as Bitmap
                 imageview!!.setImageBitmap(thumbnail)
                 saveImage(thumbnail)
-                Toast.makeText(this@Upload, "Image Saved!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@UploadActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
             }
         }
     }

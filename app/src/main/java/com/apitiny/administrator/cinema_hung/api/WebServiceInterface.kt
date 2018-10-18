@@ -2,6 +2,7 @@ package com.apitiny.administrator.cinema_hung.api
 
 import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
+import com.apitiny.administrator.cinema_hung.model.User
 import okhttp3.Callback
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -23,6 +24,9 @@ interface WebServiceInterface {
         @Part file: MultipartBody.Part)
         : Observable<FilmModel>
 
+    @POST("/auth/signup")
+    fun signup(): Observable<User>
+
 //    @POST("/auth/signin")
-//    fun login(@Body request: SigninRequest, callback: Callback<SigninResponse>)
+//    fun signin(@Body request: SigninRequest, callback: Callback<SigninResponse>)
 }

@@ -24,7 +24,7 @@
                     </intent-filter>
                 </activity>
                 <activity
-                    android:name=".activity.Upload"
+                    android:name=".activity.UploadActivity"
                     android:label="@string/upload_activity"></activity>
                 <activity
                     android:name=".activity.SigninActivity"
