@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.apitiny.administrator.cinema_hung.model.FilmModel
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.film_item.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -39,7 +40,11 @@ class FilmAdapter(val items : ArrayList<FilmModel>, val context: Context) : Recy
             e.printStackTrace()
         }
 
-        holder?.img?.setImageResource(items.get(position).posterURL)
+        Glide.with(context)
+                .load("https://cinema-hatin.herokuapp.com" + items.get(position).posterURL)
+                .into(holder.img)
+
+//        holder?.img?.setImageResource(items.get(position).posterURL)
         holder?.name?.text = items.get(position).name
         holder?.genre?.text = items.get(position).genre
         holder?.releaseDate?.text = dateString
