@@ -8,11 +8,17 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
+import com.apitiny.administrator.cinema_hung.api.ApiProvider
+import com.apitiny.administrator.cinema_hung.api.ApiResult
+import com.apitiny.administrator.cinema_hung.model.BaseModel
+import com.apitiny.administrator.cinema_hung.model.ResponseModel
+import com.google.gson.JsonObject
 
 class SigninActivity : AppCompatActivity() {
+
 
     var _emailText: EditText? = null
     var _passwordText: EditText? = null
@@ -50,14 +56,41 @@ class SigninActivity : AppCompatActivity() {
 
         val progressDialog = ProgressDialog(this@SigninActivity,
                 com.apitiny.administrator.cinema_hung.R.style.Base_Theme_AppCompat_Dialog)
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Login...")
-        progressDialog.show()
 
-        val email = _emailText!!.text.toString()
-        val password = _passwordText!!.text.toString()
+        val _email = _emailText!!.text.toString()
+        val _password = _passwordText!!.text.toString()
 
-        // TODO: Implement your own authentication logic here.
+        ApiProvider().callApiSignin(object : ApiResult {
+            override fun onError(e: Exception) {
+                Log.e("TAG", e.message)
+            }
+
+            override fun onModel(baseModel: BaseModel) {
+                if (baseModel is ResponseModel) {
+                    // Get a instance of PreferencesHelper class
+                    val preferencesHelper = PreferencesHelper(this@SigninActivity)
+                    // save token on preferences
+                    preferencesHelper.deviceToken = baseModel.isToken
+                    // get token from preferences
+                    val token = preferencesHelper.deviceToken
+                    Log.v("TAG", "My token is: $token")
+
+                    Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this@SigninActivity, MainActivity::class.java))
+                    finish()
+                }
+            }
+
+            override fun onJson(jsonObject: JsonObject) {
+                Log.e("TAG", "Received a different model")
+            }
+
+            override fun onAPIFail() {
+                Toast.makeText(baseContext, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_LONG).show()
+                Log.e("TAG", "Failed horribly")
+            }
+
+        }, _email, _password, this)
 
         android.os.Handler().postDelayed(
                 {
@@ -80,20 +113,21 @@ class SigninActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        // Disable going back to the MainActivity
-        moveTaskToBack(true)
-    }
+//    override fun onBackPressed() {
+//        // Disable going back to the MainActivity
+//        moveTaskToBack(true)
+//    }
 
     fun onLoginSuccess() {
         _signinButton!!.isEnabled = true
 //        finish()
-        startActivity(Intent(this, MainActivity::class.java))
+//        Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
+//        startActivity(Intent(this, MainActivity::class.java))
+//        finish()
     }
 
     fun onLoginFailed() {
-        Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
-
+//        Toast.makeText(baseContext, "Đăng nhập không thành công!", Toast.LENGTH_LONG).show()
         _signinButton!!.isEnabled = true
     }
 
@@ -104,17 +138,11 @@ class SigninActivity : AppCompatActivity() {
         val password = _passwordText!!.text.toString()
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText!!.error = "enter a valid email address"
+            _emailText!!.error = "Địa chỉ Email không đúng!"
             valid = false
-        } else {
-            _emailText!!.error = null
-        }
-
-        if (password.isEmpty() || password.length < 4 || password.length > 10) {
-            _passwordText!!.error = "between 4 and 10 alphanumeric characters"
+        } else if (password.isEmpty() || password.length < 4 || password.length > 10) {
+            _passwordText!!.error = "Mật khẩu phải từ 4 đến 10 kí tự"
             valid = false
-        } else {
-            _passwordText!!.error = null
         }
 
         return valid

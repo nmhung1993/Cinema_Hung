@@ -7,9 +7,14 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.apitiny.administrator.cinema_hung.R
+import com.apitiny.administrator.cinema_hung.api.ApiProvider
+import com.apitiny.administrator.cinema_hung.api.ApiResult
+import com.apitiny.administrator.cinema_hung.model.BaseModel
+import com.apitiny.administrator.cinema_hung.model.ResponseModel
+import com.apitiny.administrator.cinema_hung.model.User
+import com.google.gson.JsonObject
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -55,15 +60,37 @@ class SignUpActivity : AppCompatActivity() {
 
         val progressDialog = ProgressDialog(this@SignUpActivity,
                 com.apitiny.administrator.cinema_hung.R.style.Base_Theme_AppCompat_Dialog)
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Creating Account...")
-        progressDialog.show()
+//        progressDialog.isIndeterminate = true
+//        progressDialog.setMessage("Đang tạo tài khoản...")
+//        progressDialog.show()
 
-        val email = _emailText!!.text.toString()
-        val password = _passwordText!!.text.toString()
-        val reEnterPassword = _reEnterPasswordText!!.text.toString()
+        val _email = _emailText!!.text.toString()
+        val _name = _nameText!!.text.toString()
+        val _password = _passwordText!!.text.toString()
 
-        // TODO: Implement your own signup logic here.
+        ApiProvider().callApiSignup(object : ApiResult {
+            override fun onError(e: Exception) {
+                Log.e("TAG", e.message)
+            }
+
+            override fun onModel(baseModel: BaseModel) {
+                if (baseModel is ResponseModel) {
+                    Toast.makeText(baseContext, "Đăng ký thành công!", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
+                    finish()
+                }
+            }
+
+            override fun onJson(jsonObject: JsonObject) {
+                Log.e("TAG", "Received a different model")
+            }
+
+            override fun onAPIFail() {
+                Toast.makeText(baseContext, "Email này đã có người sử dụng", Toast.LENGTH_LONG).show()
+                Log.e("TAG", "Failed horribly")
+            }
+
+        }, _name, _email, _password, this)
 
         android.os.Handler().postDelayed(
                 {
@@ -79,14 +106,13 @@ class SignUpActivity : AppCompatActivity() {
     fun onSignupSuccess() {
         _signupButton!!.isEnabled = true
 //        setResult(Activity.RESULT_OK, null)
+//        Toast.makeText(baseContext, "Đăng ký thành công!", Toast.LENGTH_LONG).show()
+//        startActivity(Intent(this, MainActivity::class.java))
 //        finish()
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 
     fun onSignupFailed() {
-        Toast.makeText(baseContext, "Login failed", Toast.LENGTH_LONG).show()
-
+//        Toast.makeText(baseContext, "Đăng ký không thành công!", Toast.LENGTH_LONG).show()
         _signupButton!!.isEnabled = true
     }
 
@@ -94,28 +120,22 @@ class SignUpActivity : AppCompatActivity() {
         var valid = true
 
         val email = _emailText!!.text.toString()
+        val name = _nameText!!.text.toString()
         val password = _passwordText!!.text.toString()
         val reEnterPassword = _reEnterPasswordText!!.text.toString()
 
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            _emailText!!.error = "enter a valid email address"
+            _emailText!!.error = "Địa chỉ Email không đúng!"
             valid = false
-        } else {
-            _emailText!!.error = null
-        }
-
-        if (password.isEmpty() || password.length < 4 || password.length > 10) {
-            _passwordText!!.error = "between 4 and 10 alphanumeric characters"
+        } else if (name.isEmpty()) {
+            _nameText!!.error = "Bạn phải nhập tên của bạn."
             valid = false
-        } else {
-            _passwordText!!.error = null
-        }
-
-        if (reEnterPassword.isEmpty() || reEnterPassword.length < 4 || reEnterPassword.length > 10 || reEnterPassword != password) {
-            _reEnterPasswordText!!.error = "Password Do not match"
+        } else if (password.isEmpty() || password.length < 4 || password.length > 10) {
+            _passwordText!!.error = "Mật khẩu phải dài từ 4 đến 10 kí tự"
             valid = false
-        } else {
-            _reEnterPasswordText!!.error = null
+        } else if (reEnterPassword.isEmpty() || reEnterPassword.length < 4 || reEnterPassword.length > 10 || reEnterPassword != password) {
+            _reEnterPasswordText!!.error = "Mật khẩu không trùng!!"
+            valid = false
         }
 
         return valid
