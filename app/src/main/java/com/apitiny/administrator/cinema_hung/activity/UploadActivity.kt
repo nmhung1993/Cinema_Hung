@@ -16,6 +16,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.widget.*
+import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.api.ApiProvider
 import com.apitiny.administrator.cinema_hung.api.ApiResult
@@ -38,6 +39,7 @@ import kotlin.collections.HashMap
 
 class UploadActivity : AppCompatActivity() {
 
+    var prefName = PreferencesHelper(this)
     var _nameED: EditText? = null
     var _contentED: EditText? = null
     var tv: TextView? = null
@@ -86,6 +88,7 @@ class UploadActivity : AppCompatActivity() {
             val _genre = genre_sp.getSelectedItem().toString()
             val _releaseDate = releaseDate_ed.text.toString()
             val _content = content_ed.text.toString()
+            val _creatorId = prefName.getVal(application,"userID")
 
             val df: DateFormat = SimpleDateFormat("dd/MM/yyyy")
             var milisec: String = ""
@@ -99,7 +102,7 @@ class UploadActivity : AppCompatActivity() {
             }
 
             if (validate(_name,_content,filesrc))
-                uploadPhim(_name, _genre, milisec, _content)
+                uploadPhim(_name, _genre, milisec, _content, _creatorId)
         }
 
     }
@@ -120,7 +123,7 @@ class UploadActivity : AppCompatActivity() {
         return valid
     }
 
-    fun uploadPhim(name: String, genre: String, releaseDate: String, content: String) {
+    fun uploadPhim(name:String, genre:String, releaseDate:String, content:String, creatorId:String?) {
 
         var hashMap = HashMap<String, RequestBody>()
 
@@ -128,6 +131,7 @@ class UploadActivity : AppCompatActivity() {
         hashMap.put("genre", RequestBody.create(MediaType.parse("text/plain"), genre))
         hashMap.put("releaseDate", RequestBody.create(MediaType.parse("text/plain"), releaseDate))
         hashMap.put("content", RequestBody.create(MediaType.parse("text/plain"), content))
+        hashMap.put("creatorId", RequestBody.create(MediaType.parse("text/plain"), creatorId))
 
         var imgsrc: MultipartBody.Part = MultipartBody.Part.createFormData("file", filesrc?.name, RequestBody.create(MediaType.parse("image/*"), filesrc))
         //val progressDialog = AlertDialog.Builder(this)

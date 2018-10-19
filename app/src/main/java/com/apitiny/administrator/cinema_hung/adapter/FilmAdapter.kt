@@ -9,6 +9,7 @@ import android.widget.ImageView
 import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.film_item.view.*
 import java.text.DateFormat
 import java.text.ParseException
@@ -44,16 +45,10 @@ class FilmAdapter(val items : ArrayList<FilmModel>, val context: Context) : Recy
         if(items.get(position).posterURL != null || items.get(position).posterURL != "null") {
             Glide.with(context)
             .load("https://cinema-hatin.herokuapp.com" + items.get(position).posterURL)
-//            .apply(RequestOptions().placeholder(R.drawable.ani))
-//            .error(R.drawable.ic_film)
-            .into(holder.img)
-        }else {
-            Glide.with(context)
-            .load(R.drawable.ic_defaultmv)
+            .apply(RequestOptions().placeholder(R.drawable.ic_defaultmv))
             .into(holder.img)
         }
 
-//        holder?.img?.setImageResource(items.get(position).posterURL)
         holder?.name?.text = items.get(position).name
         holder?.genre?.text = items.get(position).genre
         holder?.releaseDate?.text = dateString
@@ -74,5 +69,5 @@ class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {
     val name = view.name
     val genre = view.genre
     val releaseDate = view.releaseDate
-    val creatorId = view.creatorId
+    val creatorId = view.creatorName
 }

@@ -27,7 +27,7 @@ class SignUpActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.apitiny.administrator.cinema_hung.R.layout.acitivity_signup)
+        setContentView(R.layout.acitivity_signup)
 
         _emailText = findViewById(R.id.email_ed) as EditText
         _nameText = findViewById(R.id.name_ed) as EditText
@@ -44,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
             val intent = Intent(applicationContext, SigninActivity::class.java)
             startActivity(intent)
             finish()
-            overridePendingTransition(com.apitiny.administrator.cinema_hung.R.anim.push_right_in, com.apitiny.administrator.cinema_hung.R.anim.push_right_out)
+            overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
         }
     }
 
@@ -58,8 +58,7 @@ class SignUpActivity : AppCompatActivity() {
 
         _signupButton!!.isEnabled = false
 
-        val progressDialog = ProgressDialog(this@SignUpActivity,
-                com.apitiny.administrator.cinema_hung.R.style.Base_Theme_AppCompat_Dialog)
+        val progressDialog = ProgressDialog(this@SignUpActivity, R.style.Base_Theme_AppCompat_Dialog)
 //        progressDialog.isIndeterminate = true
 //        progressDialog.setMessage("Đang tạo tài khoản...")
 //        progressDialog.show()

@@ -19,7 +19,7 @@ import com.google.gson.JsonObject
 
 class SigninActivity : AppCompatActivity() {
 
-
+    var preferencesHelper = PreferencesHelper(this@SigninActivity)
     var _emailText: EditText? = null
     var _passwordText: EditText? = null
     var _signinButton: Button? = null
@@ -27,20 +27,19 @@ class SigninActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(com.apitiny.administrator.cinema_hung.R.layout.activity_signin)
+        setContentView(R.layout.activity_signin)
 
-        _signinButton = findViewById(R.id.btnSignin) as Button
+        _signinButton = findViewById(R.id.btnProfile) as Button
         _signupButton = findViewById(R.id.btnSignup) as Button
         _passwordText = findViewById(R.id.password_ed) as EditText
         _emailText = findViewById(R.id.email_ed) as EditText
         _signinButton!!.setOnClickListener { login() }
 
         _signupButton!!.setOnClickListener {
-            // Start the Signup activity
             val intent = Intent(applicationContext, SignUpActivity::class.java)
             startActivityForResult(intent, REQUEST_SIGNUP)
             finish()
-            overridePendingTransition(com.apitiny.administrator.cinema_hung.R.anim.push_left_in, com.apitiny.administrator.cinema_hung.R.anim.push_left_out);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
         }
     }
 
@@ -54,8 +53,7 @@ class SigninActivity : AppCompatActivity() {
 
         _signinButton!!.isEnabled = false
 
-        val progressDialog = ProgressDialog(this@SigninActivity,
-                com.apitiny.administrator.cinema_hung.R.style.Base_Theme_AppCompat_Dialog)
+        val progressDialog = ProgressDialog(this@SigninActivity, R.style.Base_Theme_AppCompat_Dialog)
 
         val _email = _emailText!!.text.toString()
         val _password = _passwordText!!.text.toString()
@@ -67,13 +65,10 @@ class SigninActivity : AppCompatActivity() {
 
             override fun onModel(baseModel: BaseModel) {
                 if (baseModel is ResponseModel) {
-                    // Get a instance of PreferencesHelper class
-                    val preferencesHelper = PreferencesHelper(this@SigninActivity)
+
                     // save token on preferences
-                    preferencesHelper.deviceToken = baseModel.isToken
-                    // get token from preferences
-                    val token = preferencesHelper.deviceToken
-                    Log.v("TAG", "My token is: $token")
+                    preferencesHelper.saveVal(application,"token",baseModel.isToken)
+                    preferencesHelper.saveVal(application,"userID",baseModel.isUser!!._id)
 
                     Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this@SigninActivity, MainActivity::class.java))
