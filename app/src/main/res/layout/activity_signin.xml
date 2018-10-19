@@ -108,7 +108,7 @@
                 android:typeface="serif" />
 
             <Button
-                android:id="@+id/btnSignin"
+                android:id="@+id/btnProfile"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/btn_lin"

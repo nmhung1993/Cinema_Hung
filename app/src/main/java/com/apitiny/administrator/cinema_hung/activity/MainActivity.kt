@@ -4,13 +4,16 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.SearchView
 import android.widget.Toast
+import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.adapter.FilmAdapter
 import com.apitiny.administrator.cinema_hung.api.ApiProvider
@@ -23,9 +26,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    var prefToken = PreferencesHelper(this)
     private val TAG = "ApiProvider"
     val listFilm: ArrayList<FilmModel> = ArrayList()
     var filmAdapter: FilmAdapter? = null
+//    private lateinit var mRandom: Random
+    lateinit var mHandler: Handler
+    lateinit var mRunnable: Runnable
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,14 +44,31 @@ class MainActivity : AppCompatActivity() {
         filmAdapter = FilmAdapter(listFilm, this)
         rv_film_list.adapter = filmAdapter
 
-        btnSignin.setOnClickListener {
-            val intent = Intent(applicationContext, SigninActivity::class.java)
-            startActivity(intent)
-        }
+        if(prefToken.getVal(application,"token")==null)
+            btnProfile.setVisibility(View.INVISIBLE)
+        else btnProfile.setVisibility(View.VISIBLE)
 
         btnUpload.setOnClickListener {
-            val intent = Intent(applicationContext, UploadActivity::class.java)
-            startActivity(intent)
+            if(prefToken.getVal(application,"token")==null) {
+                val intent = Intent(applicationContext, SigninActivity::class.java)
+                startActivity(intent)
+            }else{
+                val intent = Intent(applicationContext, UploadActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+
+        mHandler = Handler()
+        swipe_refresh_layout.setOnRefreshListener {
+            // Initialize a new Runnable
+            mRunnable = Runnable {
+                getListFilm()
+                Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT).show()
+                // Hide swipe to refresh icon animation
+                swipe_refresh_layout.isRefreshing = false
+            }
+            mHandler.postDelayed(mRunnable,3000)
         }
 
     }
