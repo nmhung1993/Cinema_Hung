@@ -38,14 +38,19 @@ import kotlin.collections.HashMap
 
 class UploadActivity : AppCompatActivity() {
 
+    var _nameED: EditText? = null
+    var _contentED: EditText? = null
+    var tv: TextView? = null
 
-    var tv : TextView ?= null
-    var filesrc : File? = null
-    private var btn: Button? = null
-    private var btnup: Button? = null
-    private var imageview: ImageView? = null
+    var filesrc: File? = null
+
+    var btnchonanh: Button? = null
+    var btnupload: Button? = null
+    var imgfilm: ImageView? = null
+
     private val GALLERY = 1
     private val CAMERA = 2
+
     lateinit var editTextDate: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,58 +62,83 @@ class UploadActivity : AppCompatActivity() {
 //        tv!!.setTypeface(font)
 ////        tv!!.text = "\f03d"
 
-        btn = findViewById<View>(R.id.btnChonAnh) as Button
-        imageview = findViewById<View>(R.id.imgFilm) as ImageView
-        btn!!.setOnClickListener { showPictureDialog() }
+        _nameED = findViewById(R.id.name_ed) as EditText
+        _contentED = findViewById(R.id.content_ed) as EditText
+        btnchonanh = findViewById<View>(R.id.btnChonAnh) as Button
+        imgfilm = findViewById<View>(R.id.imgFilm) as ImageView
+        btnupload = findViewById<View>(R.id.btnUp) as Button
 
         editTextDate = findViewById(R.id.releaseDate_ed)
 
-        btnup = findViewById<View>(R.id.btnUp) as Button
-        btnup!!.setOnClickListener {
-            val name : String = name_ed.text.toString()
-            val genre : String = genre_sp.getSelectedItem().toString()
-            val releaseDate : String = releaseDate_ed.text.toString()
-            val content : String = content_ed.text.toString()
+        val date_n = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
 
-            val df : DateFormat = SimpleDateFormat("dd/MM/yyyy")
-            var milisec : String = ""
+        editTextDate.setText(date_n)
+
+
+
+
+        btnchonanh!!.setOnClickListener { showPictureDialog() }
+        btnupload!!.setOnClickListener {
+
+//            var _imgsrc: MultipartBody.Part = MultipartBody.Part.createFormData("file", filesrc?.name, RequestBody.create(MediaType.parse("image/*"), filesrc))
+
+            val _name = name_ed.text.toString()
+            val _genre = genre_sp.getSelectedItem().toString()
+            val _releaseDate = releaseDate_ed.text.toString()
+            val _content = content_ed.text.toString()
+
+            val df: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+            var milisec: String = ""
             //chuyển đổi ngày sang mili giây
             try {
-                val d : Date = df.parse(releaseDate)
-                val l : Long = d.time
+                val d: Date = df.parse(_releaseDate)
+                val l: Long = d.time
                 milisec = l.toString()
             } catch (e: ParseException) {
                 e.printStackTrace()
             }
-            if (name!="" && content!="")
-                uploadPhim(name,genre,milisec,content)
-            else{
-                Toast.makeText(this, "Bạn phải nhập đầy đủ thông tin phim!", Toast.LENGTH_SHORT).show()
-            }
 
+            if (validate(_name,_content,filesrc))
+                uploadPhim(_name, _genre, milisec, _content)
         }
 
     }
 
-    fun uploadPhim(name:String,genre:String,releaseDate:String,content:String){
+    fun validate(name:String, content:String, file:File?): Boolean {
+        var valid = true
+
+        if (name!!.isEmpty()) {
+            name_ed!!.error = "Tên phim không được bỏ trống!"
+            valid = false
+        } else if (content.isEmpty()) {
+            content_ed!!.error = "Vui lòng nhập mô tả phim"
+            valid = false
+        } else if (file == null){
+            Toast.makeText(baseContext, "Bạn chưa chọn hình!", Toast.LENGTH_LONG).show()
+            valid = false
+        }
+        return valid
+    }
+
+    fun uploadPhim(name: String, genre: String, releaseDate: String, content: String) {
 
         var hashMap = HashMap<String, RequestBody>()
 
-        hashMap.put("name", RequestBody.create(MediaType.parse("text/plain"),name))
-        hashMap.put("genre", RequestBody.create(MediaType.parse("text/plain"),genre))
-        hashMap.put("releaseDate", RequestBody.create(MediaType.parse("text/plain"),releaseDate))
-        hashMap.put("content", RequestBody.create(MediaType.parse("text/plain"),content))
+        hashMap.put("name", RequestBody.create(MediaType.parse("text/plain"), name))
+        hashMap.put("genre", RequestBody.create(MediaType.parse("text/plain"), genre))
+        hashMap.put("releaseDate", RequestBody.create(MediaType.parse("text/plain"), releaseDate))
+        hashMap.put("content", RequestBody.create(MediaType.parse("text/plain"), content))
 
-        var imgsrc :MultipartBody.Part = MultipartBody.Part.createFormData("file", filesrc?.name,RequestBody.create(MediaType.parse("image/*"),filesrc) )
+        var imgsrc: MultipartBody.Part = MultipartBody.Part.createFormData("file", filesrc?.name, RequestBody.create(MediaType.parse("image/*"), filesrc))
         //val progressDialog = AlertDialog.Builder(this)
-        ApiProvider().callApiPost(object: ApiResult{
+        ApiProvider().callApiPost(object : ApiResult {
             override fun onError(e: Exception) {
                 Log.e("TAG", e.message)
             }
 
             override fun onModel(baseModel: BaseModel) {
                 if (baseModel is FilmModel) {
-//                    imgsrc = MultipartBody.Part.createFormData("file", filesrc?.name,RequestBody.create(MediaType.parse("image/*"),filesrc) )
+//                    imgsrc = MultipartBody.Part.createFormData("file", filesrc?._name,RequestBody.create(MediaType.parse("image/*"),filesrc) )
                 }
             }
 
@@ -120,7 +150,7 @@ class UploadActivity : AppCompatActivity() {
                 Log.e("TAG", "Failed horribly")
             }
 
-        },hashMap,imgsrc,this)
+        }, hashMap, imgsrc, this)
     }
 
     private fun showPictureDialog() {
@@ -150,15 +180,15 @@ class UploadActivity : AppCompatActivity() {
 
         if (permission != PackageManager.PERMISSION_GRANTED) {
             makeRequest()
-        }else{
+        } else {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, CAMERA)
         }
     }
 
-    private  fun makeRequest(){
+    private fun makeRequest() {
         ActivityCompat.requestPermissions(this,
-                arrayOf(Manifest.permission.CAMERA,Manifest.permission.WRITE_EXTERNAL_STORAGE),100)
+                arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 100)
     }
 
 
@@ -178,72 +208,65 @@ class UploadActivity : AppCompatActivity() {
         }
     }
 
-    fun openPickerDate(view:View){
+    fun openPickerDate(view: View) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH) + 1
         val day = c.get(Calendar.DAY_OF_MONTH)
 
-        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth -> editTextDate.setText("" + dayOfMonth + "/" + month + "/" + year)
-        }, year,month,day)
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+            editTextDate.setText("" + dayOfMonth + "/" + month + "/" + year)
+        }, year, month, day)
         dpd.show()
     }
 
 
-    public override fun onActivityResult(requestCode:Int, resultCode:Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
         /* if (resultCode == this.RESULT_CANCELED)
          {
          return
          }*/
-        if (requestCode == GALLERY)
-        {
-            if (data != null)
-            {
+        if (requestCode == GALLERY) {
+            if (data != null) {
                 val contentURI = data!!.data
-                try
-                {
+                try {
                     val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
                     val path = saveImage(bitmap)
                     Toast.makeText(this@UploadActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
-                    imageview!!.setImageBitmap(bitmap)
+                    imgfilm!!.setImageBitmap(bitmap)
 
-                }
-                catch (e: IOException) {
+                } catch (e: IOException) {
                     e.printStackTrace()
                     Toast.makeText(this@UploadActivity, "Failed!", Toast.LENGTH_SHORT).show()
                 }
 
             }
 
-        }
-        else if (requestCode == CAMERA)
-        {
+        } else if (requestCode == CAMERA) {
             if (data!!.extras != null) {
                 val thumbnail = data!!.extras!!.get("data") as Bitmap
-                imageview!!.setImageBitmap(thumbnail)
+                imgfilm!!.setImageBitmap(thumbnail)
                 saveImage(thumbnail)
                 Toast.makeText(this@UploadActivity, "Image Saved!", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    fun saveImage(myBitmap: Bitmap):String {
+    fun saveImage(myBitmap: Bitmap): String {
         val bytes = ByteArrayOutputStream()
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
         val wallpaperDirectory = File(
                 (Environment.getExternalStorageDirectory()).toString() + IMAGE_DIRECTORY)
         // have the object build the directory structure, if needed.
-        Log.d("fee",wallpaperDirectory.toString())
-        if (!wallpaperDirectory.exists())
-        {
+        Log.d("fee", wallpaperDirectory.toString())
+        if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs()
         }
 
-        try
-        {
-            Log.d("heel",wallpaperDirectory.toString())
+        try {
+            Log.d("heel", wallpaperDirectory.toString())
             val f = File(wallpaperDirectory, ((Calendar.getInstance()
                     .getTimeInMillis()).toString() + ".jpg"))
             f.createNewFile()
@@ -257,8 +280,7 @@ class UploadActivity : AppCompatActivity() {
             Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
 
             return f.getAbsolutePath()
-        }
-        catch (e1: IOException) {
+        } catch (e1: IOException) {
             e1.printStackTrace()
         }
 

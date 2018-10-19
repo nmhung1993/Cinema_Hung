@@ -41,15 +41,25 @@ class FilmAdapter(val items : ArrayList<FilmModel>, val context: Context) : Recy
             e.printStackTrace()
         }
 
-        Glide.with(context)
-                .load("https://cinema-hatin.herokuapp.com" + items.get(position).posterURL)
-                .into(holder.img)
+        if(items.get(position).posterURL != null || items.get(position).posterURL != "null") {
+            Glide.with(context)
+            .load("https://cinema-hatin.herokuapp.com" + items.get(position).posterURL)
+//            .apply(RequestOptions().placeholder(R.drawable.ani))
+//            .error(R.drawable.ic_film)
+            .into(holder.img)
+        }else {
+            Glide.with(context)
+            .load(R.drawable.ic_defaultmv)
+            .into(holder.img)
+        }
 
 //        holder?.img?.setImageResource(items.get(position).posterURL)
         holder?.name?.text = items.get(position).name
         holder?.genre?.text = items.get(position).genre
         holder?.releaseDate?.text = dateString
-        holder?.creatorId?.text = items.get(position).user?.name
+        if (items.get(position).user?.name == null)
+            holder?.creatorId?.text = "Unknown"
+            else holder?.creatorId?.text = items.get(position).user?.name
     }
 }
 

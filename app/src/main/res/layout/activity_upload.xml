@@ -16,7 +16,8 @@
             android:id="@+id/imgFilm"
             android:layout_width="150dp"
             android:layout_height="150dp"
-            android:padding="5dp" />
+            android:padding="5dp"
+            android:src="@drawable/ic_defaultmv" />
 
         <Button
             android:id="@+id/btnChonAnh"
@@ -25,27 +26,23 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/round_shape_btn"
-            android:fontFamily="serif"
             android:lineSpacingExtra="10sp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="@string/chonanh"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:typeface="serif" />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
             android:padding="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/tenphim"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/name_ed"
@@ -55,26 +52,23 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/round_shape_txt"
             android:ems="10"
-            android:fontFamily="serif"
-            android:inputType="text"
+            android:inputType="text|textCapSentences"
             android:padding="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text=""
-            android:typeface="serif" />
+            android:paddingStart="18dp"
+            android:text="" />
 
         <TextView
             android:id="@+id/tvtheloai"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
             android:padding="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/theloai"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textStyle="bold" />
 
         <Spinner
             android:id="@+id/genre_sp"
@@ -92,14 +86,12 @@
             android:id="@+id/tvreleaseDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
             android:padding="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/ngayphathanh"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/releaseDate_ed"
@@ -109,27 +101,24 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/round_shape_txt"
             android:focusable="false"
-            android:fontFamily="serif"
             android:inputType="date"
             android:onClick="openPickerDate"
             android:padding="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:text="01/01/2018"
-            android:typeface="serif" />
+            android:paddingStart="18dp"
+            android:text="01/01/2018" />
 
         <TextView
             android:id="@+id/tvcontent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="serif"
             android:padding="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="@string/mota"
             android:textSize="18sp"
-            android:textStyle="bold"
-            android:typeface="serif" />
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/content_ed"
@@ -140,20 +129,19 @@
             android:layout_weight="1"
             android:background="@drawable/round_shape_txt"
             android:ems="10"
-            android:fontFamily="serif"
             android:gravity="start"
-            android:inputType="textCapSentences|textMultiLine"
+            android:inputType="textCapSentences|textMultiLine|text"
             android:lineSpacingExtra="10sp"
             android:maxLength="2000"
             android:maxLines="8"
             android:padding="10dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
+            android:paddingStart="18dp"
             android:scrollHorizontally="false"
             android:scrollbars="vertical"
-            android:text=""
-            android:textSize="18sp"
-            android:typeface="serif" />
+            android:singleLine="true"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnUp"
@@ -162,13 +150,11 @@
             android:layout_marginBottom="5dp"
             android:layout_marginTop="5dp"
             android:background="@drawable/round_shape_btn"
-            android:fontFamily="serif"
             android:lineSpacingExtra="10sp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
             android:text="@string/taophim"
             android:textColor="@color/white"
-            android:textSize="18sp"
-            android:typeface="serif" />
+            android:textSize="18sp" />
     </LinearLayout>
 </ScrollView>

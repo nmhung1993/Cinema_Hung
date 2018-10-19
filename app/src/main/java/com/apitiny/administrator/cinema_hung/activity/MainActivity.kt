@@ -24,8 +24,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "ApiProvider"
-    val listFilm : ArrayList<FilmModel> = ArrayList()
-    var filmAdapter : FilmAdapter? = null
+    val listFilm: ArrayList<FilmModel> = ArrayList()
+    var filmAdapter: FilmAdapter? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,12 +35,12 @@ class MainActivity : AppCompatActivity() {
         filmAdapter = FilmAdapter(listFilm, this)
         rv_film_list.adapter = filmAdapter
 
-        btnSignin.setOnClickListener{
+        btnSignin.setOnClickListener {
             val intent = Intent(applicationContext, SigninActivity::class.java)
             startActivity(intent)
         }
 
-        btnUpload.setOnClickListener{
+        btnUpload.setOnClickListener {
             val intent = Intent(applicationContext, UploadActivity::class.java)
             startActivity(intent)
         }
@@ -48,39 +48,41 @@ class MainActivity : AppCompatActivity() {
     }
 
     //get List Phim
-    fun getListFilm (){
-            ApiProvider().callApiGet(object : ApiResult {
-                override fun onError(e: Exception) {
-                    Toast.makeText(applicationContext,"Không thể lấy được phim",Toast.LENGTH_SHORT).show()
-                    Log.e(TAG, e.message)
-                }
+    fun getListFilm() {
+        ApiProvider().callApiGet(object : ApiResult {
+            override fun onError(e: Exception) {
+                Toast.makeText(applicationContext, "Không thể lấy được phim", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, e.message)
+            }
 
-                override fun onModel(baseModel: BaseModel) {
-                    if (baseModel is ListFilmResponse) {
-                        //xóa hết dữ liêu cũ và add dữ liệu mới
-                        listFilm.clear()
-                        listFilm.addAll(baseModel.films)
+            override fun onModel(baseModel: BaseModel) {
+                if (baseModel is ListFilmResponse) {
+                    //xóa hết dữ liêu cũ và add dữ liệu mới
+                    listFilm.clear()
+                    listFilm.addAll(baseModel.films)
 
-                        filmAdapter?.notifyDataSetChanged()
-                    }
+                    filmAdapter?.notifyDataSetChanged()
                 }
+            }
 
-                override fun onJson(jsonObject: JsonObject) {
-                    Log.e(TAG, "Received a different model")
-                }
+            override fun onJson(jsonObject: JsonObject) {
+                Log.e(TAG, "Received a different model")
+            }
 
-                override fun onAPIFail() {
-                    Log.e(TAG, "Failed horribly")
-                }
-            })
+            override fun onAPIFail() {
+                Log.e(TAG, "Failed horribly")
+            }
+        })
     }
+
     // Menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu, menu)
         return true
     }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item!!.itemId) {
+        when (item!!.itemId) {
             R.id.btnSearch -> {
                 val searchView: SearchView = item?.actionView as SearchView
                 searchView.onActionViewExpanded()
