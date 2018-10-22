@@ -25,12 +25,14 @@ import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
 import com.google.gson.JsonObject
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
     var prefValue = PreferencesHelper(this)
     private val TAG = "ApiProvider"
     val listFilm: ArrayList<FilmModel> = ArrayList()
+    var listFilmSearch: ArrayList<FilmModel> = ArrayList()
     var filmAdapter: FilmAdapter? = null
 
     lateinit var mHandler: Handler
@@ -46,18 +48,18 @@ class MainActivity : AppCompatActivity() {
         filmAdapter = FilmAdapter(listFilm, this)
         rv_film_list.adapter = filmAdapter
 
-        if(prefValue.getVal(application,"token")==null)
+        if (prefValue.getVal(application, "token") == null)
             btnProfile.setVisibility(View.INVISIBLE)
         else btnProfile.setVisibility(View.VISIBLE)
 
-        btnProfile.setOnClickListener{
+        btnProfile.setOnClickListener {
             val intent = Intent(applicationContext, ProfileActivity::class.java)
             startActivity(intent)
         }
 
         btnUpload.setOnClickListener {
-            if(prefValue.getVal(application,"token")==null) showDialog()
-            else{
+            if (prefValue.getVal(application, "token") == null) showDialog()
+            else {
                 val intent = Intent(applicationContext, UploadActivity::class.java)
                 startActivity(intent)
             }
@@ -73,14 +75,14 @@ class MainActivity : AppCompatActivity() {
                 // Hide swipe to refresh icon animation
                 swipe_refresh_layout.isRefreshing = false
             }
-            mHandler.postDelayed(mRunnable,3000)
+            mHandler.postDelayed(mRunnable, 3000)
         }
 
     }
 
     //get List Phim
     fun getListFilm() {
-        ApiProvider().callApiGet(object : ApiResult {
+        ApiProvider().callApiGetFilmList(object : ApiResult {
             override fun onError(e: Exception) {
                 Toast.makeText(applicationContext, "Không thể lấy được phim", Toast.LENGTH_SHORT).show()
                 Log.e(TAG, e.message)
@@ -106,82 +108,62 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getListDetail(id:String) {
-        ApiProvider().callApiGetFilmDetail(object : ApiResult {
-            override fun onError(e: Exception) {
-                Toast.makeText(applicationContext, "Không thể lấy được phim", Toast.LENGTH_SHORT).show()
-                Log.e(TAG, "onError" + e.message)
-            }
-
-            override fun onModel(baseModel: BaseModel) {
-                if (baseModel is FilmModel) {
-                    Log.e(TAG, "onModel")
-//                    baseModel.
-                }
-            }
-
-            override fun onJson(jsonObject: JsonObject) {
-                Log.e(TAG, "onJson")
-            }
-
-            override fun onAPIFail() {
-                Log.e(TAG, "onAPIFail")
-            }
-        }, id)
-    }
-
-    // Menu
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
-            R.id.btnSearch -> {
-                val searchView: SearchView = item?.actionView as SearchView
-                searchView.onActionViewExpanded()
-                searchView.requestFocus()
-                val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-
-                searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-                searchView.setOnSearchClickListener {
-                    //loadQuery("null")
-                }
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        if (query != null) {
-                            //if (query.isNotEmpty()) loadQuery("%$query%")
-                            //if (query.isEmpty()) loadQuery("null")
-                        }
-                        return false
+    fun filter(charText: String?) {
+        var charText = charText
+        listFilmSearch.clear()
+        if (charText == null || charText == "") {
+            listFilmSearch.addAll(listFilm)
+        } else {
+            charText = charText!!.toLowerCase(Locale.getDefault())
+            for (wp in listFilm) {
+                if (wp.name != null) {
+                    if (wp.name?.toLowerCase()!!.contains(charText.toLowerCase()) || wp.name!!.contains(charText)) {
+                        listFilmSearch.add(wp)
                     }
-
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        if (newText != null) {
-                            //if (newText.length > 1) loadQuery("%$newText%")
-                            //if (newText.isEmpty()) loadQuery("null")
-                        }
-                        return false
-                    }
-                })
-                searchView.setOnCloseListener {
-                    //loadQuery("%")
-                    false
                 }
-                //presenter.onDrawerOptionAboutClick()
-                return true
-            }
-            else -> {
-
             }
         }
-
-        return super.onOptionsItemSelected(item)
+        filmAdapter?.setSearchResult(listFilmSearch)
     }
 
-    private fun showDialog(){
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu to use in the action bar
+        menuInflater.inflate(R.menu.menu, menu)
+
+        val searchItem = menu.findItem(R.id.btnSearch)
+
+        if (searchItem != null) {
+            val searchView = searchItem.actionView as SearchView
+
+            val searchHint = getString(R.string.searchHint)
+            searchView.setQueryHint(searchHint)
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+//                    if (query!!.toString().isNotEmpty()) {
+////                        startRecyclerView(generateData(newText))
+////                        listFilm.add()
+//                        filter(query)
+//                        listFilm.clear()
+//                    }
+//                    else {
+//
+//                    }
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+
+                    filter(newText)
+                    return false
+                }
+            })
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun showDialog() {
         // Late initialize an alert dialog object
         lateinit var dialog: AlertDialog
 
@@ -196,8 +178,8 @@ class MainActivity : AppCompatActivity() {
 
 
         // On click listener for dialog buttons
-        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
-            when(which){
+        val dialogClickListener = DialogInterface.OnClickListener { _, which ->
+            when (which) {
                 DialogInterface.BUTTON_POSITIVE -> {
 //                    prefValue.delVal(application,"token")
                     val intent = Intent(applicationContext, SigninActivity::class.java)
@@ -212,13 +194,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Set the alert dialog positive/yes button
-        builder.setPositiveButton("Đăng Nhập",dialogClickListener)
+        builder.setPositiveButton("Đăng Nhập", dialogClickListener)
 
         // Set the alert dialog negative/no button
 //        builder.setNegativeButton("NO",dialogClickListener)
 
         // Set the alert dialog neutral/cancel button
-        builder.setNeutralButton("Trở lại",dialogClickListener)
+        builder.setNeutralButton("Trở lại", dialogClickListener)
 
         // Initialize the AlertDialog using builder object
         dialog = builder.create()
@@ -231,7 +213,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         getListFilm()
-        if(prefValue.getVal(application,"token")==null)
+        if (prefValue.getVal(application, "token") == null)
             btnProfile.setVisibility(View.INVISIBLE)
         else btnProfile.setVisibility(View.VISIBLE)
     }

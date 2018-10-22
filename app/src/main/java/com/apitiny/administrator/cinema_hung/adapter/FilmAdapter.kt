@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class FilmAdapter(val items: ArrayList<FilmModel>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
+class FilmAdapter(var items: ArrayList<FilmModel>, val context: Context) : RecyclerView.Adapter<ViewHolder>() {
 
 //    private val clickListener: ClickListener? = null
 //
@@ -82,6 +82,13 @@ class FilmAdapter(val items: ArrayList<FilmModel>, val context: Context) : Recyc
 
 //        holder?.containerView?.setOnClickListener { clickListener(item) }
     }
+
+
+
+    fun setSearchResult(result: ArrayList<FilmModel>) {
+        items = result
+        notifyDataSetChanged()
+    }
 }
 
 private fun ImageView.setImageResource(posterURL: String?) {
@@ -99,26 +106,4 @@ class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     val releaseDate = view.releaseDate
     val creatorId = view.creatorName
     val rView = view.item_detail
-
-//    init {
-//        view.setOnClickListener(this)
-//    }
-//
-//    override fun onClick(v: View) {
-//        Log.d("RecyclerView", "CLICK!")
-//    }
-
-//    fun bind(item: View, pos: Int, listener: (Int) -> Unit) = with(itemView) {
-//        rView.setOnClickListener {
-//            listener(pos)
-//        }
-//    }
 }
-
-//fun setClickListener(clickListener: ClickListener) {
-//    this.clickListener = clickListener
-//}
-//
-//interface ClickListener {
-//    fun onLongClick(v: View, position: Int)
-//}

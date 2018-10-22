@@ -8,7 +8,7 @@
     <string name="filmdetail_activity">Thông Tin Chi Tiết Phim</string>
 
     <string name="upload">Upload</string>
-
+    <string name="searchHint">Nhập tên phim để tìm kiếm</string>
     <string name="chonanh">Chọn ảnh</string>
     <string name="tenphim">Tên phim</string>
     <string name="theloai">Thể loại</string>
