@@ -78,6 +78,7 @@ class SigninActivity : AppCompatActivity() {
                     preferencesHelper.saveVal(application, "userID", baseModel.isUser!!._id)
                     preferencesHelper.saveVal(application, "userEmail", baseModel.isUser!!.email)
                     preferencesHelper.saveVal(application, "userName", baseModel.isUser!!.name)
+                    preferencesHelper.saveVal(application, "avatarURL", baseModel.isUser!!.avatarURL)
 
                     Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this@SigninActivity, MainActivity::class.java))

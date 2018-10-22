@@ -20,6 +20,20 @@ interface WebServiceInterface {
             @Path("id") id : String
     ): Observable<FilmDetailModel>
 
+    @FormUrlEncoded
+    @POST("user/edit")
+    fun postUsername(
+            @Header("token") token:String,
+            @Field("name") name: String)
+            : Observable<User>
+
+    @Multipart
+    @POST("user/change-avatar")
+    fun postAvatar(
+            @Header("x-access-token") token:String,
+            @Part file: MultipartBody.Part)
+            : Observable<User>
+
     @Multipart
     @POST("cinema")
     fun postFilm(
