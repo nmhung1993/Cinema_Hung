@@ -5,5 +5,5 @@ class User : BaseModel{
     var name: String? = null
     var password: String? = null
     var email: String? = null
-    var userLink: String? = null
+    var avatarURL:String? = null
 }

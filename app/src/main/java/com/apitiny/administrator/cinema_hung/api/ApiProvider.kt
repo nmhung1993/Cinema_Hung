@@ -5,10 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.apitiny.administrator.cinema_hung.Constants
-import com.apitiny.administrator.cinema_hung.model.FilmDetailModel
-import com.apitiny.administrator.cinema_hung.model.FilmModel
-import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
-import com.apitiny.administrator.cinema_hung.model.ResponseModel
+import com.apitiny.administrator.cinema_hung.model.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import rx.Subscriber
@@ -20,7 +17,7 @@ class ApiProvider {
 
     private val mApiServiceNetwork = ApiServiceNetwork.getInstance()
 
-    fun callApiGet(apiResult: ApiResult) {
+    fun callApiGetFilmList(apiResult: ApiResult) {
         try {
             mApiServiceNetwork.getNetworkService(Constants.API_ENDPOINT)
                     .getFilmList()
@@ -76,7 +73,7 @@ class ApiProvider {
 
     }
 
-    fun callApiPost(apiResult: ApiResult, parseMap: HashMap<String, RequestBody>, file: MultipartBody.Part, context: Context) {
+    fun callApiPostFilm(apiResult: ApiResult, parseMap: HashMap<String, RequestBody>, file: MultipartBody.Part, context: Context) {
         try {
             mApiServiceNetwork.getNetworkService(Constants.API_ENDPOINT)
                     .postFilm(parseMap, file)
@@ -184,6 +181,36 @@ class ApiProvider {
                         override fun onNext(resetPw: ResponseModel) {
                             Log.i(TAG, "onNext")
                             apiResult.onModel(resetPw)
+                        }
+                    })
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+            apiResult.onError(e)
+        }
+
+    }
+
+    fun callApiPostAvatar(apiResult: ApiResult, token:String,file: MultipartBody.Part, context: Context) {
+        try {
+            mApiServiceNetwork.getNetworkService(Constants.API_ENDPOINT)
+                    .postAvatar(token,file)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Subscriber<User>() {
+                        override fun onCompleted() {
+                            Toast.makeText(context, "Upload Avatar thành công!", Toast.LENGTH_SHORT).show()
+                            // get activity để kết thúc UploadActivity Activity
+
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Log.e(TAG, "onError" + Log.getStackTraceString(e))
+                            apiResult.onAPIFail()
+                        }
+
+                        override fun onNext(postFilm: User) {
+                            Log.i(TAG, "onNext")
+                            apiResult.onModel(postFilm)
                         }
                     })
         } catch (e: Exception) {

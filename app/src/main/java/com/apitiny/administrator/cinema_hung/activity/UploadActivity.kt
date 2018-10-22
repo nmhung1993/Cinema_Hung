@@ -136,7 +136,7 @@ class UploadActivity : AppCompatActivity() {
 
         var imgsrc: MultipartBody.Part = MultipartBody.Part.createFormData("file", filesrc?.name, RequestBody.create(MediaType.parse("image/*"), filesrc))
         //val progressDialog = AlertDialog.Builder(this)
-        ApiProvider().callApiPost(object : ApiResult {
+        ApiProvider().callApiPostFilm(object : ApiResult {
             override fun onError(e: Exception) {
                 Log.e("TAG", e.message)
             }
