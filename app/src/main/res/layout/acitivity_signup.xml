@@ -32,10 +32,10 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_mail" />
+                android:background="@drawable/ic_user" />
 
             <EditText
-                android:id="@+id/email_ed"
+                android:id="@+id/name_ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -43,7 +43,7 @@
                 android:background="@drawable/round_shape_txt"
                 android:ems="10"
                 android:fontFamily="serif"
-                android:hint="@string/email"
+                android:hint="@string/name"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:paddingLeft="20dp"
@@ -61,10 +61,10 @@
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/ic_user" />
+                android:background="@drawable/ic_mail" />
 
             <EditText
-                android:id="@+id/name_ed"
+                android:id="@+id/email_ed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
@@ -72,7 +72,7 @@
                 android:background="@drawable/round_shape_txt"
                 android:ems="10"
                 android:fontFamily="serif"
-                android:hint="@string/name"
+                android:hint="@string/email"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:paddingLeft="20dp"

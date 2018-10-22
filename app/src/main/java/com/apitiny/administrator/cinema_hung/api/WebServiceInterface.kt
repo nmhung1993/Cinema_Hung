@@ -1,9 +1,6 @@
 package com.apitiny.administrator.cinema_hung.api
 
-import com.apitiny.administrator.cinema_hung.model.FilmModel
-import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
-import com.apitiny.administrator.cinema_hung.model.ResponseModel
-import com.apitiny.administrator.cinema_hung.model.User
+import com.apitiny.administrator.cinema_hung.model.*
 import okhttp3.Callback
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -17,6 +14,11 @@ interface WebServiceInterface {
 
     @GET("cinema")
     fun getFilmList(): Observable<ListFilmResponse>
+
+    @GET("cinema/{id}")
+    fun getFilmDetail(
+            @Path("id") id : String
+    ): Observable<FilmDetailModel>
 
     @Multipart
     @POST("cinema")
@@ -38,6 +40,12 @@ interface WebServiceInterface {
     fun signin(
             @Field("email") email: String,
             @Field("password") password: String
+    ): Observable<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("auth/reset-password")
+    fun resetpw(
+            @Field("email") email: String
     ): Observable<ResponseModel>
 
 //    @POST("/auth/signin")

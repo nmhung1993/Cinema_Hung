@@ -2,9 +2,11 @@ package com.apitiny.administrator.cinema_hung.activity
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
@@ -26,11 +28,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var prefToken = PreferencesHelper(this)
+    var prefValue = PreferencesHelper(this)
     private val TAG = "ApiProvider"
     val listFilm: ArrayList<FilmModel> = ArrayList()
     var filmAdapter: FilmAdapter? = null
-//    private lateinit var mRandom: Random
+
     lateinit var mHandler: Handler
     lateinit var mRunnable: Runnable
 
@@ -44,15 +46,18 @@ class MainActivity : AppCompatActivity() {
         filmAdapter = FilmAdapter(listFilm, this)
         rv_film_list.adapter = filmAdapter
 
-        if(prefToken.getVal(application,"token")==null)
+        if(prefValue.getVal(application,"token")==null)
             btnProfile.setVisibility(View.INVISIBLE)
         else btnProfile.setVisibility(View.VISIBLE)
 
+        btnProfile.setOnClickListener{
+            val intent = Intent(applicationContext, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
         btnUpload.setOnClickListener {
-            if(prefToken.getVal(application,"token")==null) {
-                val intent = Intent(applicationContext, SigninActivity::class.java)
-                startActivity(intent)
-            }else{
+            if(prefValue.getVal(application,"token")==null) showDialog()
+            else{
                 val intent = Intent(applicationContext, UploadActivity::class.java)
                 startActivity(intent)
             }
@@ -99,6 +104,30 @@ class MainActivity : AppCompatActivity() {
                 Log.e(TAG, "Failed horribly")
             }
         })
+    }
+
+    fun getListDetail(id:String) {
+        ApiProvider().callApiGetFilmDetail(object : ApiResult {
+            override fun onError(e: Exception) {
+                Toast.makeText(applicationContext, "Không thể lấy được phim", Toast.LENGTH_SHORT).show()
+                Log.e(TAG, "onError" + e.message)
+            }
+
+            override fun onModel(baseModel: BaseModel) {
+                if (baseModel is FilmModel) {
+                    Log.e(TAG, "onModel")
+//                    baseModel.
+                }
+            }
+
+            override fun onJson(jsonObject: JsonObject) {
+                Log.e(TAG, "onJson")
+            }
+
+            override fun onAPIFail() {
+                Log.e(TAG, "onAPIFail")
+            }
+        }, id)
     }
 
     // Menu
@@ -152,9 +181,58 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    private fun showDialog(){
+        // Late initialize an alert dialog object
+        lateinit var dialog: AlertDialog
+
+        // Initialize a new instance of alert dialog builder object
+        val builder = AlertDialog.Builder(this)
+
+        // Set a title for alert dialog
+        builder.setTitle("ĐĂNG NHẬP")
+
+        // Set a message for alert dialog
+        builder.setMessage("Bạn có muốn đăng nhập không?")
+
+
+        // On click listener for dialog buttons
+        val dialogClickListener = DialogInterface.OnClickListener{ _, which ->
+            when(which){
+                DialogInterface.BUTTON_POSITIVE -> {
+//                    prefValue.delVal(application,"token")
+                    val intent = Intent(applicationContext, SigninActivity::class.java)
+                    startActivity(intent)
+                }
+//                DialogInterface.BUTTON_NEGATIVE -> toast("Negative/No button clicked.")
+//                DialogInterface.BUTTON_NEUTRAL -> {
+//                    val intent = Intent(applicationContext, UploadActivity::class.java)
+//                    startActivity(intent)
+//                }
+            }
+        }
+
+        // Set the alert dialog positive/yes button
+        builder.setPositiveButton("Đăng Nhập",dialogClickListener)
+
+        // Set the alert dialog negative/no button
+//        builder.setNegativeButton("NO",dialogClickListener)
+
+        // Set the alert dialog neutral/cancel button
+        builder.setNeutralButton("Trở lại",dialogClickListener)
+
+        // Initialize the AlertDialog using builder object
+        dialog = builder.create()
+
+        // Finally, display the alert dialog
+        dialog.show()
+    }
+
     //khi quay lại sẽ get lại list film
     override fun onResume() {
         super.onResume()
         getListFilm()
+        if(prefValue.getVal(application,"token")==null)
+            btnProfile.setVisibility(View.INVISIBLE)
+        else btnProfile.setVisibility(View.VISIBLE)
     }
 }

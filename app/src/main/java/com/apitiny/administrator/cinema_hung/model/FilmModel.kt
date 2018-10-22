@@ -1,6 +1,7 @@
 package com.apitiny.administrator.cinema_hung.model
 
 class FilmModel : BaseModel {
+    var _id: String? = null
     var posterURL: String? = null
     var name: String? = null
     var genre: String? = null
@@ -12,4 +13,8 @@ class FilmModel : BaseModel {
 
 class ListFilmResponse : BaseModel {
     var films = listOf<FilmModel>()
+}
+
+class FilmDetailModel : BaseModel {
+    var cinema = FilmModel()
 }

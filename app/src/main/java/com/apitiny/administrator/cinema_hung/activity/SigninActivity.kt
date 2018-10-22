@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
@@ -29,10 +30,16 @@ class SigninActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
-        _signinButton = findViewById(R.id.btnProfile) as Button
+        _signinButton = findViewById(R.id.btnSignin) as Button
         _signupButton = findViewById(R.id.btnSignup) as Button
         _passwordText = findViewById(R.id.password_ed) as EditText
         _emailText = findViewById(R.id.email_ed) as EditText
+
+        val _rspwbtn = findViewById(R.id.resetpassword) as TextView
+        _rspwbtn.setOnClickListener {
+            startActivity(Intent(this@SigninActivity, ResetPassword::class.java))
+            finish()
+        }
         _signinButton!!.setOnClickListener { login() }
 
         _signupButton!!.setOnClickListener {
@@ -67,8 +74,10 @@ class SigninActivity : AppCompatActivity() {
                 if (baseModel is ResponseModel) {
 
                     // save token on preferences
-                    preferencesHelper.saveVal(application,"token",baseModel.isToken)
-                    preferencesHelper.saveVal(application,"userID",baseModel.isUser!!._id)
+                    preferencesHelper.saveVal(application, "token", baseModel.isToken)
+                    preferencesHelper.saveVal(application, "userID", baseModel.isUser!!._id)
+                    preferencesHelper.saveVal(application, "userEmail", baseModel.isUser!!.email)
+                    preferencesHelper.saveVal(application, "userName", baseModel.isUser!!.name)
 
                     Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this@SigninActivity, MainActivity::class.java))
@@ -142,6 +151,11 @@ class SigninActivity : AppCompatActivity() {
 
         return valid
     }
+
+//    fun resetPassword() {
+//        startActivity(Intent(this, ResetPassword::class.java))
+//        finish()
+//    }
 
     companion object {
         private val TAG = "LoginActivity"

@@ -39,10 +39,9 @@ import kotlin.collections.HashMap
 
 class UploadActivity : AppCompatActivity() {
 
-    var prefName = PreferencesHelper(this)
+    var prefID = PreferencesHelper(this)
     var _nameED: EditText? = null
     var _contentED: EditText? = null
-    var tv: TextView? = null
 
     var filesrc: File? = null
 
@@ -88,7 +87,7 @@ class UploadActivity : AppCompatActivity() {
             val _genre = genre_sp.getSelectedItem().toString()
             val _releaseDate = releaseDate_ed.text.toString()
             val _content = content_ed.text.toString()
-            val _creatorId = prefName.getVal(application,"userID")
+            var _creatorId = prefID.getVal(application,"userID")
 
             val df: DateFormat = SimpleDateFormat("dd/MM/yyyy")
             var milisec: String = ""
@@ -102,6 +101,8 @@ class UploadActivity : AppCompatActivity() {
             }
 
             if (validate(_name,_content,filesrc))
+                if (_creatorId==null || _creatorId=="")
+                    _creatorId = ""
                 uploadPhim(_name, _genre, milisec, _content, _creatorId)
         }
 
@@ -215,7 +216,7 @@ class UploadActivity : AppCompatActivity() {
     fun openPickerDate(view: View) {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
-        val month = c.get(Calendar.MONTH) + 1
+        val month = c.get(Calendar.MONTH)+1
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->

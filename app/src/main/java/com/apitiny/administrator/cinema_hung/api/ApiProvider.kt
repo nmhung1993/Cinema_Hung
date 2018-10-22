@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.apitiny.administrator.cinema_hung.Constants
+import com.apitiny.administrator.cinema_hung.model.FilmDetailModel
 import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
 import com.apitiny.administrator.cinema_hung.model.ResponseModel
@@ -27,7 +28,7 @@ class ApiProvider {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Subscriber<ListFilmResponse>() {
                         override fun onCompleted() {
-                            //Do nothing for now
+                            Log.e(TAG, "onCompleted")
                         }
 
                         override fun onError(e: Throwable) {
@@ -36,7 +37,35 @@ class ApiProvider {
                         }
 
                         override fun onNext(getFilm: ListFilmResponse) {
-                            Log.i(TAG, "Operation performed successfully")
+                            Log.i(TAG, "onNext")
+                            apiResult.onModel(getFilm)
+                        }
+                    })
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+            apiResult.onError(e)
+        }
+
+    }
+
+    fun callApiGetFilmDetail(apiResult: ApiResult, id : String) {
+        try {
+            mApiServiceNetwork.getNetworkService(Constants.API_ENDPOINT)
+                    .getFilmDetail(id)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Subscriber<FilmDetailModel>() {
+                        override fun onCompleted() {
+                            Log.e(TAG, "onCompleted")
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Log.e(TAG, "onError" + Log.getStackTraceString(e))
+                            apiResult.onAPIFail()
+                        }
+
+                        override fun onNext(getFilm: FilmDetailModel) {
+                            Log.i(TAG, "onNext")
                             apiResult.onModel(getFilm)
                         }
                     })
@@ -63,12 +92,12 @@ class ApiProvider {
                         }
 
                         override fun onError(e: Throwable) {
-                            Log.e(TAG, "Lỗi" + Log.getStackTraceString(e))
+                            Log.e(TAG, "onError" + Log.getStackTraceString(e))
                             apiResult.onAPIFail()
                         }
 
                         override fun onNext(postFilm: FilmModel) {
-                            Log.i(TAG, "Operation performed successfully")
+                            Log.i(TAG, "onNext")
                             apiResult.onModel(postFilm)
                         }
                     })
@@ -87,19 +116,16 @@ class ApiProvider {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(object : Subscriber<ResponseModel>() {
                         override fun onCompleted() {
-//                            Toast.makeText(context, "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
-//                            // get activity để kết thúc UploadActivity Activity
-//                            val activity : Activity  = context as Activity
-//                            activity.finish()
+                            Log.e(TAG, "onCompleted")
                         }
 
                         override fun onError(e: Throwable) {
-                            Log.e(TAG, "Lỗi" + Log.getStackTraceString(e))
+                            Log.e(TAG, "onError" + Log.getStackTraceString(e))
                             apiResult.onAPIFail()
                         }
 
                         override fun onNext(signUp: ResponseModel) {
-                            Log.i(TAG, "Operation performed successfully")
+                            Log.i(TAG, "onNext")
                             apiResult.onModel(signUp)
                         }
                     })
@@ -119,24 +145,45 @@ class ApiProvider {
                     .subscribe(object : Subscriber<ResponseModel>() {
                         val errMsg : String ?= null
                         override fun onCompleted() {
-                            Log.e(TAG, "Lỗi")
-
-//                            Toast.makeText(context, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show()
-//                            // get activity để kết thúc Activity
-//                            val activity : Activity  = context as Activity
-//                            activity.finish()
+                            Log.e(TAG, "onCompleted")
                         }
 
                         override fun onError(e: Throwable) {
-                            Log.e(TAG, "Lỗi" + Log.getStackTraceString(e))
+                            Log.e(TAG, "onError" + Log.getStackTraceString(e))
                             apiResult.onAPIFail()
                         }
 
                         override fun onNext(signIn: ResponseModel) {
-                            Log.i(TAG, "Operation performed successfully")
+                            Log.i(TAG, "onNext")
                             apiResult.onModel(signIn)
-//                            else Toast.makeText(context, signIn.isErrormsg, Toast.LENGTH_SHORT).show()
+                        }
+                    })
+        } catch (e: Exception) {
+            Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+            apiResult.onError(e)
+        }
 
+    }
+
+    fun callApiResetPw(apiResult: ApiResult, email: String, context: Context) {
+        try {
+            mApiServiceNetwork.getNetworkService(Constants.API_ENDPOINT)
+                    .resetpw(email)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(object : Subscriber<ResponseModel>() {
+                        override fun onCompleted() {
+                            Log.e(TAG, "onCompleted")
+                        }
+
+                        override fun onError(e: Throwable) {
+                            Log.e(TAG, "onError" + Log.getStackTraceString(e))
+                            apiResult.onAPIFail()
+                        }
+
+                        override fun onNext(resetPw: ResponseModel) {
+                            Log.i(TAG, "onNext")
+                            apiResult.onModel(resetPw)
                         }
                     })
         } catch (e: Exception) {

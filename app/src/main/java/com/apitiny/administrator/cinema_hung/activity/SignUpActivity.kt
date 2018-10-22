@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.api.ApiProvider
 import com.apitiny.administrator.cinema_hung.api.ApiResult
@@ -17,6 +18,8 @@ import com.apitiny.administrator.cinema_hung.model.User
 import com.google.gson.JsonObject
 
 class SignUpActivity : AppCompatActivity() {
+
+    var preferencesHelper = PreferencesHelper(this)
 
     var _emailText: EditText? = null
     var _nameText: EditText? = null
@@ -74,6 +77,10 @@ class SignUpActivity : AppCompatActivity() {
 
             override fun onModel(baseModel: BaseModel) {
                 if (baseModel is ResponseModel) {
+                    preferencesHelper.saveVal(application,"token",baseModel.isToken)
+                    preferencesHelper.saveVal(application,"userID",baseModel.isUser!!._id)
+                    preferencesHelper.saveVal(application,"userName",baseModel.isUser!!.name)
+                    preferencesHelper.saveVal(application,"userEmail",baseModel.isUser!!.email)
                     Toast.makeText(baseContext, "Đăng ký thành công!", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
                     finish()

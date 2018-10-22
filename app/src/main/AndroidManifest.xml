@@ -23,6 +23,10 @@
                         <category android:name="android.intent.category.LAUNCHER" />
                     </intent-filter>
                 </activity>
+
+                <activity
+                    android:name=".activity.FilmDetailActivity"
+                    android:label="@string/filmdetail_activity"></activity>
                 <activity
                     android:name=".activity.UploadActivity"
                     android:label="@string/upload_activity"></activity>
@@ -30,8 +34,14 @@
                     android:name=".activity.SigninActivity"
                     android:label="@string/signin_activity"></activity>
                 <activity
+                    android:name=".activity.ResetPassword"
+                    android:label="@string/btnResetpw"></activity>
+                <activity
                     android:name=".activity.SignUpActivity"
                     android:label="@string/signup_activity"></activity>
+            <activity
+                android:name=".activity.ProfileActivity"
+                android:label="@string/profile_activity"></activity>
         </application>
 
 </manifest>

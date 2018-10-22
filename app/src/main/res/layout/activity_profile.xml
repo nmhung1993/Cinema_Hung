@@ -3,24 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
-        android:id="@+id/layout_signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:focusable="true"
         android:focusableInTouchMode="true"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="5dp">
+
+        <!--        <ImageView
+                    android:id="@+id/imgFilm"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_user" />-->
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:gravity="center"
             android:padding="5dp"
-            android:text="ĐĂNG NHẬP"
+            android:text="PROFILE"
             android:textSize="40dp" />
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_creator"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/ic_user" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:fontFamily="serif"
+                android:padding="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="name"
+                android:typeface="serif" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,66 +74,18 @@
                 android:layout_height="40dp"
                 android:background="@drawable/ic_mail" />
 
-            <EditText
-                android:id="@+id/email_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_shape_txt"
-                android:ems="10"
-                android:fontFamily="serif"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:typeface="serif" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_password" />
-
-            <EditText
-                android:id="@+id/password_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_shape_txt"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:fontFamily="serif"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:typeface="serif" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right"
-            android:padding="5dp">
             <TextView
-                android:id="@+id/resetpassword"
-                android:textStyle="italic"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_email"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đặt lại mật khẩu"
-                android:layout_marginRight="15dp"/>
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:fontFamily="serif"
+                android:padding="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="email"
+                android:typeface="serif" />
         </LinearLayout>
 
         <LinearLayout
@@ -105,7 +97,7 @@
             android:weightSum="2">
 
             <Button
-                android:id="@+id/btnSignup"
+                android:id="@+id/btnChangePass"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignLeft="@id/btn_lin"
@@ -116,13 +108,13 @@
                 android:background="@drawable/round_shape_btn"
                 android:fontFamily="serif"
                 android:lineSpacingExtra="10sp"
-                android:text="@string/btnSignup"
+                android:text="@string/btnChangePass"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:typeface="serif" />
 
             <Button
-                android:id="@+id/btnSignin"
+                android:id="@+id/btnSignOut"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_alignRight="@id/btn_lin"
@@ -133,11 +125,21 @@
                 android:background="@drawable/round_shape_btn"
                 android:fontFamily="serif"
                 android:lineSpacingExtra="10sp"
-
-                android:text="@string/btnSignin"
+                android:text="@string/btnSignOut"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:typeface="serif" />
         </LinearLayout>
+        <Button
+            android:id="@+id/btnEditPrf"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_shape_btn"
+            android:fontFamily="serif"
+            android:text="Cập nhật tài khoản"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:typeface="serif" />
     </LinearLayout>
 </ScrollView>
