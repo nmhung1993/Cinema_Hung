@@ -19,6 +19,7 @@
             android:id="@+id/name"
             android:textStyle="bold"
             android:textSize="30dp"
+            android:textColor="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -28,8 +29,8 @@
 
         <ImageView
             android:id="@+id/imgFilm"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
+            android:layout_width="400dp"
+            android:layout_height="400dp"
             android:padding="5dp"
             android:src="@mipmap/ic_launcher" />
 
@@ -147,11 +148,52 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
-                android:text="Content"
-                android:background="@drawable/round_shape_txt"/>
+                android:text="Content" />
         </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/btn_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/btnDelFilm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btn_lin"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_shape_red_btn"
+            android:fontFamily="serif"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/btnDelFilm"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:typeface="serif" />
+
+        <Button
+            android:id="@+id/btnEditFilm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/btn_lin"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_shape_btn"
+            android:fontFamily="serif"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/btnEditFilm"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:typeface="serif" />
+    </LinearLayout>
 </LinearLayout>
 </ScrollView>

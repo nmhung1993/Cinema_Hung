@@ -2,19 +2,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group>
-        <!--
-        <item
-            android:id="@+id/nav_item_info"
-            android:checked="true"
-            android:icon="@drawable/ic_info24"
-            android:title="@string/info"
-            app:showAsAction="always" />
-        -->
+
+
         <item
             android:id="@+id/btnSearch"
             android:icon="@drawable/ic_search"
             android:title="@string/srch"
-            app:actionViewClass="android.widget.SearchView"
-            app:showAsAction="ifRoom|collapseActionView" />
+            app:actionViewClass="android.support.v7.widget.SearchView"
+            app:showAsAction="always|collapseActionView" />
+
+        <!--<item-->
+            <!--android:id="@+id/btnSearch"-->
+            <!--android:icon="@drawable/ic_search"-->
+            <!--android:title="@string/srch"-->
+            <!--app:actionViewClass="android.widget.SearchView"-->
+            <!--app:showAsAction="ifRoom|collapseActionView" />-->
     </group>
 </menu>

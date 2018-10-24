@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutContainer"
@@ -14,36 +16,54 @@
     android:orientation="vertical"
     tools:context="com.apitiny.administrator.cinema_hung.activity.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_film_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+    <!--<android.support.design.widget.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
 
-    </android.support.v7.widget.RecyclerView>
+        <!--<android.support.v7.widget.Toolbar-->
+            <!--android:id="@+id/newsfeed_toolbar"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:visibility="visible"-->
+            <!--android:layout_height="?attr/actionBarSize"-->
+            <!--android:background="?attr/colorPrimary"-->
+            <!--style="@style/SearchStyle">-->
+            <!--&lt;!&ndash;app:titleTextAppearance="@style/toolbar_title_style"&ndash;&gt;-->
+            <!--&lt;!&ndash;popupTheme="@style/AppTheme.PopupOverlay" >&ndash;&gt;-->
 
-    <ImageButton
+        <!--</android.support.v7.widget.Toolbar>-->
 
-        android:id="@+id/btnUpload"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignBottom="@id/rv_film_list"
-        android:layout_alignRight="@id/rv_film_list"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/ic_add"
-        android:elevation="8dp" />
+    <!--</android.support.design.widget.AppBarLayout>-->
 
-    <ImageButton
-        android:id="@+id/btnProfile"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignBottom="@id/rv_film_list"
-        android:layout_alignLeft="@id/rv_film_list"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:background="@drawable/ic_people" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_film_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageButton
+
+            android:id="@+id/btnUpload"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBottom="@id/rv_film_list"
+            android:layout_alignRight="@id/rv_film_list"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/ic_add"
+            android:elevation="8dp" />
+
+        <ImageButton
+            android:id="@+id/btnProfile"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignBottom="@id/rv_film_list"
+            android:layout_alignLeft="@id/rv_film_list"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/ic_people" />
 
 </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

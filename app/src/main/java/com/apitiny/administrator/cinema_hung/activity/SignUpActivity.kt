@@ -1,21 +1,28 @@
 package com.apitiny.administrator.cinema_hung.activity
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.api.ApiProvider
 import com.apitiny.administrator.cinema_hung.api.ApiResult
 import com.apitiny.administrator.cinema_hung.model.BaseModel
 import com.apitiny.administrator.cinema_hung.model.ResponseModel
-import com.apitiny.administrator.cinema_hung.model.User
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
 import com.google.gson.JsonObject
+import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.acitivity_signup.*
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -28,9 +35,30 @@ class SignUpActivity : AppCompatActivity() {
     var _signupButton: Button? = null
     var _signinButton: Button? = null
 
+    lateinit var inputMethodManager: InputMethodManager
+
+    lateinit var aDialog: AwesomeProgressDialog
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.acitivity_signup)
+
+        layout_signup.setOnTouchListener { v, event -> inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
+
+        inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        aDialog = AwesomeProgressDialog(this)
+                .setMessage("")
+                .setTitle("")
+                .setDialogBodyBackgroundColor(R.color.float_transparent)
+                .setColoredCircle(R.color.colorPrimary)
+                .setCancelable(false)
+
+        Toasty.Config.getInstance()
+                .setSuccessColor(Color.parseColor("#02afee"))
+                .setErrorColor(Color.parseColor("#ef5350"))
+                .setTextSize(18)
+                .apply()
 
         _emailText = findViewById(R.id.email_ed) as EditText
         _nameText = findViewById(R.id.name_ed) as EditText
@@ -40,10 +68,15 @@ class SignUpActivity : AppCompatActivity() {
         _signupButton = findViewById(R.id.btnSignUp) as Button
         _signinButton = findViewById(R.id.btnSignIn) as Button
 
-        _signupButton!!.setOnClickListener { signup() }
+        _signupButton!!.setOnClickListener {
+            if (validate()) {
+                aDialog.show()
+                hideSoftKeyboard()
+                signup()
+            }
+        }
 
         _signinButton!!.setOnClickListener {
-            // Finish the registration screen and return to the Login activity
             val intent = Intent(applicationContext, SigninActivity::class.java)
             startActivity(intent)
             finish()
@@ -54,18 +87,6 @@ class SignUpActivity : AppCompatActivity() {
     fun signup() {
         Log.d(TAG, "Signup")
 
-        if (!validate()) {
-            onSignupFailed()
-            return
-        }
-
-        _signupButton!!.isEnabled = false
-
-        val progressDialog = ProgressDialog(this@SignUpActivity, R.style.Base_Theme_AppCompat_Dialog)
-//        progressDialog.isIndeterminate = true
-//        progressDialog.setMessage("Đang tạo tài khoản...")
-//        progressDialog.show()
-
         val _email = _emailText!!.text.toString()
         val _name = _nameText!!.text.toString()
         val _password = _passwordText!!.text.toString()
@@ -74,52 +95,32 @@ class SignUpActivity : AppCompatActivity() {
             override fun onError(e: Exception) {
                 Log.e("TAG", e.message)
             }
-
             override fun onModel(baseModel: BaseModel) {
                 if (baseModel is ResponseModel) {
-                    preferencesHelper.saveVal(application,"token",baseModel.isToken)
-                    preferencesHelper.saveVal(application,"userID",baseModel.isUser!!._id)
-                    preferencesHelper.saveVal(application,"userName",baseModel.isUser!!.name)
-                    preferencesHelper.saveVal(application,"userEmail",baseModel.isUser!!.email)
-                    Toast.makeText(baseContext, "Đăng ký thành công!", Toast.LENGTH_LONG).show()
+                    preferencesHelper.saveVal(application, "token", baseModel.isToken)
+                    preferencesHelper.saveVal(application, "userID", baseModel.isUser!!._id)
+                    preferencesHelper.saveVal(application, "userName", baseModel.isUser!!.name)
+                    preferencesHelper.saveVal(application, "userEmail", baseModel.isUser!!.email)
+                    Toasty.success(this@SignUpActivity, "Đăng ký thành công!", Toast.LENGTH_SHORT, true).show()
                     startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
                     finish()
                 }
             }
-
             override fun onJson(jsonObject: JsonObject) {
                 Log.e("TAG", "Received a different model")
             }
-
             override fun onAPIFail() {
-                Toast.makeText(baseContext, "Email này đã có người sử dụng", Toast.LENGTH_LONG).show()
+                aDialog.hide()
+                var aiDialog = AwesomeInfoDialog(this@SignUpActivity)
+                        .setTitle("LỖI!!!")
+                        .setMessage("Email này đã có người sử dụng?")
+                        .setColoredCircle(R.color.red_btn)
+                        .setDialogIconAndColor(R.drawable.ic_dialog_warning, R.color.white)
+                        .setCancelable(true)
+                aiDialog.show()
                 Log.e("TAG", "Failed horribly")
             }
-
         }, _name, _email, _password, this)
-
-        android.os.Handler().postDelayed(
-                {
-                    // On complete call either onSignupSuccess or onSignupFailed
-                    // depending on success
-                    onSignupSuccess()
-                    // onSignupFailed();
-                    progressDialog.dismiss()
-                }, 3000)
-    }
-
-
-    fun onSignupSuccess() {
-        _signupButton!!.isEnabled = true
-//        setResult(Activity.RESULT_OK, null)
-//        Toast.makeText(baseContext, "Đăng ký thành công!", Toast.LENGTH_LONG).show()
-//        startActivity(Intent(this, MainActivity::class.java))
-//        finish()
-    }
-
-    fun onSignupFailed() {
-//        Toast.makeText(baseContext, "Đăng ký không thành công!", Toast.LENGTH_LONG).show()
-        _signupButton!!.isEnabled = true
     }
 
     fun validate(): Boolean {
@@ -143,8 +144,14 @@ class SignUpActivity : AppCompatActivity() {
             _reEnterPasswordText!!.error = "Mật khẩu không trùng!!"
             valid = false
         }
-
         return valid
+    }
+
+    fun hideSoftKeyboard() {
+        if (currentFocus != null) {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
     }
 
     companion object {

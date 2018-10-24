@@ -12,6 +12,11 @@ class ResponseModel : BaseModel{
     var isUser: User? = null
     @SerializedName("errorMessage")
     var isErrormsg: String? = null
+    @SerializedName("error")
+    var isError: String? = null
     @SerializedName("message")
     var isMessage: String? = null
+    @SerializedName("response")
+    var isResponse: User? = null
+
 }

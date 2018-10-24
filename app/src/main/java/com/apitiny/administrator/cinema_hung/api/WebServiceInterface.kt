@@ -22,9 +22,15 @@ interface WebServiceInterface {
 
     @FormUrlEncoded
     @POST("user/edit")
-    fun postUsername(
-            @Header("token") token:String,
+    fun postEditName(
+            @Header("x-access-token") token:String,
             @Field("name") name: String)
+            : Observable<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("auth/user")
+    fun postUserinfo(
+            @Field("token") token: String)
             : Observable<User>
 
     @Multipart
@@ -32,7 +38,15 @@ interface WebServiceInterface {
     fun postAvatar(
             @Header("x-access-token") token:String,
             @Part file: MultipartBody.Part)
-            : Observable<User>
+            : Observable<ResponseModel>
+
+    @FormUrlEncoded
+    @POST("user/change-password")
+    fun postChangePassword(
+            @Header("x-access-token") token:String,
+            @Field("oldPassword") oldPassword: String,
+            @Field("newPassword") newPassword: String)
+            : Observable<ResponseModel>
 
     @Multipart
     @POST("cinema")
@@ -62,6 +76,18 @@ interface WebServiceInterface {
             @Field("email") email: String
     ): Observable<ResponseModel>
 
-//    @POST("/auth/signin")
-//    fun signin(@Body request: SigninRequest, callback: Callback<SigninResponse>)
+    @FormUrlEncoded
+    @POST("cinema/delete")
+    fun postDelFilm(
+            @Header("x-access-token") token:String,
+            @Field("_id") _id: String)
+            : Observable<ResponseModel>
+
+    @Multipart
+    @POST("cinema/edit")
+    fun postEditFilm(
+            @Header("x-access-token") token:String,
+            @PartMap body: HashMap<String, RequestBody>,
+            @Part file: MultipartBody.Part)
+            : Observable<FilmModel>
 }

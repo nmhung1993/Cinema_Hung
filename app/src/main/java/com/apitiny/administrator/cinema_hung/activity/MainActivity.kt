@@ -1,20 +1,18 @@
 package com.apitiny.administrator.cinema_hung.activity
 
-import android.app.SearchManager
+//import android.widget.SearchView
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.SearchView
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
-import android.widget.SearchView
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import com.apitiny.administrator.cinema_hung.PreferencesHelper
 import com.apitiny.administrator.cinema_hung.R
 import com.apitiny.administrator.cinema_hung.adapter.FilmAdapter
@@ -23,11 +21,19 @@ import com.apitiny.administrator.cinema_hung.api.ApiResult
 import com.apitiny.administrator.cinema_hung.model.BaseModel
 import com.apitiny.administrator.cinema_hung.model.FilmModel
 import com.apitiny.administrator.cinema_hung.model.ListFilmResponse
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure
 import com.google.gson.JsonObject
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var inputMethodManager: InputMethodManager
+
+    lateinit var aDialog: AwesomeProgressDialog
 
     var prefValue = PreferencesHelper(this)
     private val TAG = "ApiProvider"
@@ -43,6 +49,23 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        hideSoftKeyboard()
+
+        inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        aDialog = AwesomeProgressDialog(this)
+                .setMessage("")
+                .setTitle("")
+                .setDialogBodyBackgroundColor(R.color.float_transparent)
+                .setColoredCircle(R.color.colorPrimary)
+                .setCancelable(false)
+
+        Toasty.Config.getInstance()
+                .setSuccessColor(Color.parseColor("#02afee"))
+                .setErrorColor(Color.parseColor("#ef5350"))
+                .setTextSize(18)
+                .apply()
+
         getListFilm()
         rv_film_list.layoutManager = LinearLayoutManager(this)
         filmAdapter = FilmAdapter(listFilm, this)
@@ -55,6 +78,7 @@ class MainActivity : AppCompatActivity() {
         btnProfile.setOnClickListener {
             val intent = Intent(applicationContext, ProfileActivity::class.java)
             startActivity(intent)
+            overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
         }
 
         btnUpload.setOnClickListener {
@@ -62,17 +86,15 @@ class MainActivity : AppCompatActivity() {
             else {
                 val intent = Intent(applicationContext, UploadActivity::class.java)
                 startActivity(intent)
+                overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out)
             }
 
         }
 
         mHandler = Handler()
         swipe_refresh_layout.setOnRefreshListener {
-            // Initialize a new Runnable
             mRunnable = Runnable {
                 getListFilm()
-                Toast.makeText(applicationContext, "Refreshing...", Toast.LENGTH_SHORT).show()
-                // Hide swipe to refresh icon animation
                 swipe_refresh_layout.isRefreshing = false
             }
             mHandler.postDelayed(mRunnable, 3000)
@@ -82,19 +104,18 @@ class MainActivity : AppCompatActivity() {
 
     //get List Phim
     fun getListFilm() {
+        aDialog.show()
         ApiProvider().callApiGetFilmList(object : ApiResult {
             override fun onError(e: Exception) {
-                Toast.makeText(applicationContext, "Không thể lấy được phim", Toast.LENGTH_SHORT).show()
                 Log.e(TAG, e.message)
             }
 
             override fun onModel(baseModel: BaseModel) {
                 if (baseModel is ListFilmResponse) {
-                    //xóa hết dữ liêu cũ và add dữ liệu mới
                     listFilm.clear()
                     listFilm.addAll(baseModel.films)
-
                     filmAdapter?.notifyDataSetChanged()
+                    aDialog.hide()
                 }
             }
 
@@ -108,17 +129,17 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun filter(charText: String?) {
-        var charText = charText
+    fun filter(inputText: String?) {
+        var _inputText = inputText
         listFilmSearch.clear()
-        if (charText == null || charText == "") {
+        if (_inputText == null || _inputText == "") {
             listFilmSearch.addAll(listFilm)
         } else {
-            charText = charText!!.toLowerCase(Locale.getDefault())
-            for (wp in listFilm) {
-                if (wp.name != null) {
-                    if (wp.name?.toLowerCase()!!.contains(charText.toLowerCase()) || wp.name!!.contains(charText)) {
-                        listFilmSearch.add(wp)
+            _inputText = _inputText!!.toLowerCase(Locale.getDefault())
+            for (item in listFilm) {
+                if (item.name != null) {
+                    if (item.name?.toLowerCase()!!.contains(_inputText.toLowerCase()) || item.name!!.contains(_inputText)) {
+                        listFilmSearch.add(item)
                     }
                 }
             }
@@ -132,86 +153,61 @@ class MainActivity : AppCompatActivity() {
 
         val searchItem = menu.findItem(R.id.btnSearch)
 
+
         if (searchItem != null) {
             val searchView = searchItem.actionView as SearchView
-
             val searchHint = getString(R.string.searchHint)
+            showSoftKeyboard(searchView)
+            searchView.onActionViewExpanded()
+            searchView.requestFocus()
             searchView.setQueryHint(searchHint)
-
             searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
-//                    if (query!!.toString().isNotEmpty()) {
-////                        startRecyclerView(generateData(newText))
-////                        listFilm.add()
-//                        filter(query)
-//                        listFilm.clear()
-//                    }
-//                    else {
-//
-//                    }
                     return false
                 }
-
                 override fun onQueryTextChange(newText: String?): Boolean {
-
                     filter(newText)
                     return false
                 }
             })
         }
-
         return super.onCreateOptionsMenu(menu)
     }
 
     private fun showDialog() {
-        // Late initialize an alert dialog object
-        lateinit var dialog: AlertDialog
-
-        // Initialize a new instance of alert dialog builder object
-        val builder = AlertDialog.Builder(this)
-
-        // Set a title for alert dialog
-        builder.setTitle("ĐĂNG NHẬP")
-
-        // Set a message for alert dialog
-        builder.setMessage("Bạn có muốn đăng nhập không?")
-
-
-        // On click listener for dialog buttons
-        val dialogClickListener = DialogInterface.OnClickListener { _, which ->
-            when (which) {
-                DialogInterface.BUTTON_POSITIVE -> {
-//                    prefValue.delVal(application,"token")
+        var aiDialog = AwesomeInfoDialog(this)
+                .setTitle("ĐĂNG NHẬP")
+                .setMessage("Bạn có muốn đăng nhập không?")
+                .setPositiveButtonText("Đăng Nhập")
+                .setColoredCircle(R.color.colorPrimary)
+                .setDialogIconAndColor(R.drawable.ic_dialog_info, R.color.white)
+                .setPositiveButtonbackgroundColor(R.color.colorPrimary)
+                .setPositiveButtonTextColor(R.color.white)
+                .setCancelable(true)
+                .setPositiveButtonClick(Closure() {
                     val intent = Intent(applicationContext, SigninActivity::class.java)
                     startActivity(intent)
-                }
-//                DialogInterface.BUTTON_NEGATIVE -> toast("Negative/No button clicked.")
-//                DialogInterface.BUTTON_NEUTRAL -> {
-//                    val intent = Intent(applicationContext, UploadActivity::class.java)
-//                    startActivity(intent)
-//                }
-            }
-        }
-
-        // Set the alert dialog positive/yes button
-        builder.setPositiveButton("Đăng Nhập", dialogClickListener)
-
-        // Set the alert dialog negative/no button
-//        builder.setNegativeButton("NO",dialogClickListener)
-
-        // Set the alert dialog neutral/cancel button
-        builder.setNeutralButton("Trở lại", dialogClickListener)
-
-        // Initialize the AlertDialog using builder object
-        dialog = builder.create()
-
-        // Finally, display the alert dialog
-        dialog.show()
+                    overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
+                })
+        aiDialog.show()
     }
 
-    //khi quay lại sẽ get lại list film
+    fun hideSoftKeyboard() {
+        if (currentFocus != null) {
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+        }
+    }
+
+    fun showSoftKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        view.requestFocus()
+        inputMethodManager.showSoftInput(view, 0)
+    }
+
     override fun onResume() {
         super.onResume()
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         getListFilm()
         if (prefValue.getVal(application, "token") == null)
             btnProfile.setVisibility(View.INVISIBLE)

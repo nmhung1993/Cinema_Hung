@@ -2,10 +2,13 @@ package com.apitiny.administrator.cinema_hung.activity
 
 import android.app.Activity
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -17,8 +20,21 @@ import com.apitiny.administrator.cinema_hung.api.ApiResult
 import com.apitiny.administrator.cinema_hung.model.BaseModel
 import com.apitiny.administrator.cinema_hung.model.ResponseModel
 import com.google.gson.JsonObject
+import kotlinx.android.synthetic.main.activity_signin.*
+import android.graphics.Color.parseColor
+import cn.pedant.SweetAlert.SweetAlertDialog
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
+import es.dmoral.toasty.Toasty
+import libs.mjn.prettydialog.PrettyDialog
+import libs.mjn.prettydialog.PrettyDialogCallback
+
 
 class SigninActivity : AppCompatActivity() {
+
+    lateinit var inputMethodManager: InputMethodManager
+
+    lateinit var aDialog: AwesomeProgressDialog
 
     var preferencesHelper = PreferencesHelper(this@SigninActivity)
     var _emailText: EditText? = null
@@ -30,6 +46,23 @@ class SigninActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
 
+        layout_signin.setOnTouchListener { v, event -> inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
+
+        inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        aDialog = AwesomeProgressDialog(this)
+                .setMessage("")
+                .setTitle("")
+                .setDialogBodyBackgroundColor(R.color.float_transparent)
+                .setColoredCircle(R.color.colorPrimary)
+                .setCancelable(false)
+
+        Toasty.Config.getInstance()
+                .setSuccessColor(Color.parseColor("#02afee"))
+                .setErrorColor(Color.parseColor("#ef5350"))
+                .setTextSize(18)
+                .apply()
+
         _signinButton = findViewById(R.id.btnSignin) as Button
         _signupButton = findViewById(R.id.btnSignup) as Button
         _passwordText = findViewById(R.id.password_ed) as EditText
@@ -40,27 +73,24 @@ class SigninActivity : AppCompatActivity() {
             startActivity(Intent(this@SigninActivity, ResetPassword::class.java))
             finish()
         }
-        _signinButton!!.setOnClickListener { login() }
+        _signinButton!!.setOnClickListener {
+            inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+            if(validate()){
+                aDialog.show()
+                login()
+            }
+        }
 
         _signupButton!!.setOnClickListener {
             val intent = Intent(applicationContext, SignUpActivity::class.java)
             startActivityForResult(intent, REQUEST_SIGNUP)
             finish()
-            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
+            overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out)
         }
     }
 
     fun login() {
         Log.d(TAG, "Login")
-
-        if (!validate()) {
-            onLoginFailed()
-            return
-        }
-
-        _signinButton!!.isEnabled = false
-
-        val progressDialog = ProgressDialog(this@SigninActivity, R.style.Base_Theme_AppCompat_Dialog)
 
         val _email = _emailText!!.text.toString()
         val _password = _passwordText!!.text.toString()
@@ -80,7 +110,7 @@ class SigninActivity : AppCompatActivity() {
                     preferencesHelper.saveVal(application, "userName", baseModel.isUser!!.name)
                     preferencesHelper.saveVal(application, "avatarURL", baseModel.isUser!!.avatarURL)
 
-                    Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
+                    Toasty.success(this@SigninActivity, "Đăng nhập thành công!", Toast.LENGTH_SHORT, true).show()
                     startActivity(Intent(this@SigninActivity, MainActivity::class.java))
                     finish()
                 }
@@ -91,28 +121,25 @@ class SigninActivity : AppCompatActivity() {
             }
 
             override fun onAPIFail() {
-                Toast.makeText(baseContext, "Sai tài khoản hoặc mật khẩu!", Toast.LENGTH_LONG).show()
+                aDialog.hide()
+                var aiDialog = AwesomeInfoDialog(this@SigninActivity)
+                        .setTitle("Lỗi")
+                        .setMessage("Sai tài khoản Email hoặc mật khẩu!!!")
+                        .setColoredCircle(R.color.red_btn)
+                        .setDialogIconAndColor(R.drawable.ic_dialog_warning, R.color.white)
+                        .setCancelable(true)
+                aiDialog.show()
                 Log.e("TAG", "Failed horribly")
             }
-
         }, _email, _password, this)
 
-        android.os.Handler().postDelayed(
-                {
-                    // On complete call either onLoginSuccess or onLoginFailed
-                    onLoginSuccess()
-                    // onLoginFailed();
-                    progressDialog.dismiss()
-                }, 3000)
+        android.os.Handler().postDelayed({onLoginSuccess()},3000)
     }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         if (requestCode == REQUEST_SIGNUP) {
             if (resultCode == Activity.RESULT_OK) {
-
-                // TODO: Implement successful signup logic here
-                // By default we just finish the Activity and log them in automatically
                 this.finish()
             }
         }
@@ -125,14 +152,9 @@ class SigninActivity : AppCompatActivity() {
 
     fun onLoginSuccess() {
         _signinButton!!.isEnabled = true
-//        finish()
-//        Toast.makeText(baseContext, "Đăng nhập thành công!", Toast.LENGTH_LONG).show()
-//        startActivity(Intent(this, MainActivity::class.java))
-//        finish()
     }
 
     fun onLoginFailed() {
-//        Toast.makeText(baseContext, "Đăng nhập không thành công!", Toast.LENGTH_LONG).show()
         _signinButton!!.isEnabled = true
     }
 
@@ -152,11 +174,6 @@ class SigninActivity : AppCompatActivity() {
 
         return valid
     }
-
-//    fun resetPassword() {
-//        startActivity(Intent(this, ResetPassword::class.java))
-//        finish()
-//    }
 
     companion object {
         private val TAG = "LoginActivity"

@@ -8,40 +8,48 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
 
-        <application
-            android:allowBackup="true"
-            android:icon="@mipmap/ic_launcher"
-            android:label="@string/app_name"
-            android:roundIcon="@mipmap/ic_launcher_round"
-            android:supportsRtl="true"
-            android:theme="@style/AppTheme">
-                <activity
-                    android:name=".activity.MainActivity"
-                    android:label="@string/main_activity">
-                    <intent-filter>
-                        <action android:name="android.intent.action.MAIN" />
-                        <category android:name="android.intent.category.LAUNCHER" />
-                    </intent-filter>
-                </activity>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-                <activity
-                    android:name=".activity.FilmDetailActivity"
-                    android:label="@string/filmdetail_activity"></activity>
-                <activity
-                    android:name=".activity.UploadActivity"
-                    android:label="@string/upload_activity"></activity>
-                <activity
-                    android:name=".activity.SigninActivity"
-                    android:label="@string/signin_activity"></activity>
-                <activity
-                    android:name=".activity.ResetPassword"
-                    android:label="@string/btnResetpw"></activity>
-                <activity
-                    android:name=".activity.SignUpActivity"
-                    android:label="@string/signup_activity"></activity>
-            <activity
-                android:name=".activity.ProfileActivity"
-                android:label="@string/profile_activity"></activity>
-        </application>
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="@string/main_activity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".activity.FilmDetailActivity"
+            android:label="@string/filmdetail_activity" />
+        <activity
+            android:name=".activity.UploadActivity"
+            android:label="@string/upload_activity" />
+        <activity
+            android:name=".activity.SigninActivity"
+            android:label="@string/signin_activity" />
+        <activity
+            android:name=".activity.ResetPassword"
+            android:label="@string/btnResetpw" />
+        <activity
+            android:name=".activity.SignUpActivity"
+            android:label="@string/signup_activity" />
+        <activity
+            android:name=".activity.ProfileActivity"
+            android:windowSoftInputMode="stateHidden"
+            android:label="@string/profile_activity" />
+        <activity
+            android:name=".activity.ChangePassword"
+            android:label="@string/changepassword_activity" />
+        <activity
+            android:name=".activity.EditMyFilm"
+            android:label="@string/editMyFilm_activity" />
+    </application>
 
 </manifest>
