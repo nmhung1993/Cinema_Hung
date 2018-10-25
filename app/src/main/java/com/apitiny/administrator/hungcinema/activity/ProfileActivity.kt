@@ -71,7 +71,9 @@ class ProfileActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(activity_profile)
     
-    layout_prf.setOnTouchListener { v, event -> inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
+    layout_prf.setOnTouchListener { v, event ->
+      inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    }
     
     aDialog = AwesomeProgressDialog(this)
         .setMessage("")
@@ -131,15 +133,16 @@ class ProfileActivity : AppCompatActivity() {
     }
     
     btnEdit.setOnClickListener {
-      tv_name.setSelection(tv_name.getText().length)
-      tv_name.setEnabled(true)
-      tv_name.requestFocus()
-      
-      showSoftKeyboard(tv_name)
-      btnEditPrf.setVisibility(View.VISIBLE)
+      //      tv_name.setSelection(tv_name.getText().length)
+      //      tv_name.setEnabled(true)
+      //      tv_name.requestFocus()
+      //
+      //      showSoftKeyboard(tv_name)
+      //      btnEditPrf.setVisibility(View.VISIBLE)
     }
     
     btnEditPrf.setOnClickListener {
+      tv_name.clearFocus()
       hideSoftKeyboard()
       aDialog.setProgressBarColor(R.color.colorPrimary).show()
       if (_token != null) {

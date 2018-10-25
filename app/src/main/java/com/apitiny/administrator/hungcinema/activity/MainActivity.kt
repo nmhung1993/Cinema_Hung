@@ -110,7 +110,6 @@ class MainActivity : AppCompatActivity() {
   
   //get List Phim
   fun getListFilm() {
-    aDialog.show()
     ApiProvider().callApiGetFilmList(object : ApiResult {
       override fun onError(e: Exception) {
         Log.e(TAG, e.message)
@@ -121,7 +120,6 @@ class MainActivity : AppCompatActivity() {
           listFilm.clear()
           listFilm.addAll(baseModel.films)
           filmAdapter?.notifyDataSetChanged()
-          aDialog.hide()
         }
       }
       

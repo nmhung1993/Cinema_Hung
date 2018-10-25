@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -16,11 +17,11 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+android:textColor="@color/colorPrimary"
         android:gravity="center"
         android:padding="5dp"
         android:text="ĐĂNG NHẬP"
-        android:textSize="40dp" />
+        android:textSize="40sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,13 +43,11 @@
           android:layout_marginRight="5dp"
           android:background="@drawable/round_shape_txt"
           android:ems="10"
-          android:fontFamily="serif"
           android:hint="@string/email"
           android:inputType="textEmailAddress"
           android:padding="10dp"
           android:paddingLeft="20dp"
-          android:paddingRight="20dp"
-          android:typeface="serif" />
+          android:paddingRight="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,13 +72,11 @@
           android:background="@drawable/round_shape_txt"
           android:focusable="true"
           android:focusableInTouchMode="true"
-          android:fontFamily="serif"
           android:hint="@string/password"
           android:inputType="textPassword"
           android:padding="10dp"
           android:paddingLeft="20dp"
-          android:paddingRight="20dp"
-          android:typeface="serif" />
+          android:paddingRight="20dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -87,12 +84,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="right"
-        android:padding="5dp">
+        android:padding="5dp"
+        tools:ignore="RtlHardcoded">
 
       <TextView
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_marginRight="15dp"
+          android:layout_marginEnd="15dp"
           android:text="Đặt lại mật khẩu"
           android:textStyle="italic" />
     </LinearLayout>
@@ -109,36 +107,29 @@
           android:id="@+id/btnSignup"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_alignLeft="@id/btn_lin"
           android:layout_margin="15dp"
           android:layout_marginBottom="5dp"
           android:layout_marginTop="5dp"
           android:layout_weight="1"
           android:background="@drawable/round_shape_btn"
-          android:fontFamily="serif"
           android:lineSpacingExtra="10sp"
           android:text="@string/btnSignup"
           android:textColor="@color/white"
-          android:textSize="18sp"
-          android:typeface="serif" />
+          android:textSize="18sp" />
 
       <Button
           android:id="@+id/btnSignin"
           android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_alignRight="@id/btn_lin"
           android:layout_margin="15dp"
           android:layout_marginBottom="5dp"
           android:layout_marginTop="5dp"
           android:layout_weight="1"
           android:background="@drawable/round_shape_btn"
-          android:fontFamily="serif"
           android:lineSpacingExtra="10sp"
-
           android:text="@string/btnSignin"
           android:textColor="@color/white"
-          android:textSize="18sp"
-          android:typeface="serif" />
+          android:textSize="18sp" />
     </LinearLayout>
   </LinearLayout>
 </ScrollView>

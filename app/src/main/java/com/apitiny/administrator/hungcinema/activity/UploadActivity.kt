@@ -3,7 +3,6 @@ package com.apitiny.administrator.hungcinema.activity
 import android.Manifest
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -99,6 +98,11 @@ class UploadActivity : AppCompatActivity() {
     btnupload = findViewById<View>(R.id.btnUp) as Button
     editTextDate = findViewById(R.id.releaseDate_ed)
     editTextDate.setText(date_n)
+    
+    editTextDate.setOnClickListener {
+//      editTextDate.isEnabled = false
+      openPickerDate()
+    }
     
     btnchonanh!!.setOnClickListener { showPictureDialog() }
     btnupload!!.setOnClickListener {
@@ -258,15 +262,15 @@ class UploadActivity : AppCompatActivity() {
     }
   }
   
-  fun openPickerDate(view: View) {
+  fun openPickerDate() {
     val c = Calendar.getInstance()
-    val year = c.get(Calendar.YEAR)
-    val month = c.get(Calendar.MONTH)
-    val day = c.get(Calendar.DAY_OF_MONTH)
+    val _year = c.get(Calendar.YEAR)
+    val _month = c.get(Calendar.MONTH)
+    val _day = c.get(Calendar.DAY_OF_MONTH)
     
     val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
       editTextDate.setText("" + dayOfMonth + "/" + month + "/" + year)
-    }, year, month, day)
+    }, _year, _month, _day)
     dpd.show()
   }
   

@@ -12,24 +12,6 @@
       android:orientation="vertical"
       tools:context="com.apitiny.administrator.hungcinema.activity.MainActivity">
 
-    <!--<android.support.design.widget.AppBarLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content">-->
-
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/newsfeed_toolbar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:visibility="visible"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--android:background="?attr/colorPrimary"-->
-    <!--style="@style/SearchStyle">-->
-    <!--&lt;!&ndash;app:titleTextAppearance="@style/toolbar_title_style"&ndash;&gt;-->
-    <!--&lt;!&ndash;popupTheme="@style/AppTheme.PopupOverlay" >&ndash;&gt;-->
-
-    <!--</android.support.v7.widget.Toolbar>-->
-
-    <!--</android.support.design.widget.AppBarLayout>-->
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_film_list"
         android:layout_width="match_parent"
@@ -46,9 +28,9 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignBottom="@id/rv_film_list"
-        android:layout_alignRight="@id/rv_film_list"
+        android:layout_alignEnd="@id/rv_film_list"
         android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/ic_add"
         android:elevation="8dp" />
 
@@ -57,9 +39,9 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:layout_alignBottom="@id/rv_film_list"
-        android:layout_alignLeft="@id/rv_film_list"
+        android:layout_alignStart="@id/rv_film_list"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:background="@drawable/ic_people" />
 
   </RelativeLayout>

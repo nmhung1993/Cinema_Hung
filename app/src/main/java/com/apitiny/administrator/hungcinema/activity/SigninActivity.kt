@@ -1,7 +1,6 @@
 package com.apitiny.administrator.hungcinema.activity
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -11,7 +10,7 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
+import android.widget.LinearLayout
 import android.widget.Toast
 import com.apitiny.administrator.hungcinema.PreferencesHelper
 import com.apitiny.administrator.hungcinema.R
@@ -19,15 +18,11 @@ import com.apitiny.administrator.hungcinema.api.ApiProvider
 import com.apitiny.administrator.hungcinema.api.ApiResult
 import com.apitiny.administrator.hungcinema.model.BaseModel
 import com.apitiny.administrator.hungcinema.model.ResponseModel
-import com.google.gson.JsonObject
-import kotlinx.android.synthetic.main.activity_signin.*
-import android.graphics.Color.parseColor
-import cn.pedant.SweetAlert.SweetAlertDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
+import com.google.gson.JsonObject
 import es.dmoral.toasty.Toasty
-import libs.mjn.prettydialog.PrettyDialog
-import libs.mjn.prettydialog.PrettyDialogCallback
+import kotlinx.android.synthetic.main.activity_signin.*
 
 
 class SigninActivity : AppCompatActivity() {
@@ -68,7 +63,7 @@ class SigninActivity : AppCompatActivity() {
     _passwordText = findViewById(R.id.password_ed) as EditText
     _emailText = findViewById(R.id.email_ed) as EditText
     
-    val _rspwbtn = findViewById(R.id.resetpassword) as TextView
+    val _rspwbtn = findViewById(R.id.resetpassword) as LinearLayout
     _rspwbtn.setOnClickListener {
       startActivity(Intent(this@SigninActivity, ResetPassword::class.java))
       finish()

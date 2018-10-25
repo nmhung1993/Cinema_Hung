@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -25,15 +26,17 @@
         android:weightSum="3">
 
       <TextView
+          android:textColor="@color/black"
           android:id="@+id/name"
           android:layout_width="match_parent"
           android:layout_height="0dp"
           android:layout_weight="1"
           android:gravity="center_vertical"
-          android:paddingLeft="10dp"
+          android:paddingStart="10dp"
           android:text="Tên Phim"
-          android:textSize="18dp"
-          android:textStyle="bold" />
+          android:textSize="18sp"
+          android:textStyle="bold"
+          tools:ignore="RtlSymmetry" />
 
       <LinearLayout
           android:layout_width="match_parent"
@@ -46,22 +49,25 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="NestedWeights">
 
           <ImageView
               android:layout_width="20dp"
               android:layout_height="20dp"
               android:layout_gravity="center_vertical"
-              android:layout_marginLeft="10dp"
+              android:layout_marginStart="10dp"
               android:src="@drawable/ic_film" />
 
           <TextView
+              android:textColor="@color/black"
               android:id="@+id/genre"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
-              android:paddingLeft="10dp"
-              android:text="Thể loại" />
+              android:paddingStart="10dp"
+              android:text="Thể loại"
+              tools:ignore="RtlSymmetry" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,17 +80,20 @@
               android:layout_width="20dp"
               android:layout_height="20dp"
               android:layout_gravity="center_vertical"
-              android:layout_marginLeft="10dp"
+              android:layout_marginStart="10dp"
               android:src="@drawable/ic_releasedate" />
 
           <TextView
+              android:textColor="@color/black"
               android:id="@+id/releaseDate"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:gravity="center_vertical"
-              android:paddingLeft="10dp"
-              android:text="01/01/2018" />
+              android:paddingStart="10dp"
+              android:text="01/01/2018"
+              tools:ignore="RtlSymmetry" />
         </LinearLayout>
+
       </LinearLayout>
 
       <LinearLayout
@@ -97,22 +106,30 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:src="@drawable/ic_creator" />
 
         <TextView
+            android:textColor="@color/black"
             android:id="@+id/creatorName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:paddingLeft="10dp"
-            android:text="Người Upload" />
+            android:paddingStart="10dp"
+            android:text="Người Upload"
+            tools:ignore="RtlSymmetry" />
+
       </LinearLayout>
+
     </LinearLayout>
+
   </LinearLayout>
 
   <View
+      android:layout_margin="5dp"
+      android:padding="5dp"
       android:layout_width="match_parent"
       android:layout_height="1dp"
-      android:background="@color/jet"></View>
+      android:background="@color/jet" />
+
 </LinearLayout>
