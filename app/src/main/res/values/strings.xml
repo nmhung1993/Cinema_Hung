@@ -1,58 +1,49 @@
 <resources>
-    <string name="app_name">Cinema Project</string>
-    <string name="main_activity">Danh Sách Phim</string>
-    <string name="upload_activity">Upload Phim</string>
-    <string name="signin_activity">Đăng Nhập</string>
-    <string name="signup_activity">Đăng Ký</string>
-    <string name="profile_activity">Thông Tin Cá Nhân</string>
-    <string name="filmdetail_activity">Thông Tin Chi Tiết Phim</string>
-    <string name="changepassword_activity">Đổi Mật Khẩu</string>
-    <string name="editMyFilm_activity">Sửa Phim Của Tôi</string>
+  <string name="app_name">Hùng Cinema Project</string>
+  <string name="main_activity">Danh Sách Phim</string>
+  <string name="upload_activity">Upload Phim</string>
+  <string name="signin_activity">Đăng Nhập</string>
+  <string name="signup_activity">Đăng Ký</string>
+  <string name="profile_activity">Thông Tin Cá Nhân</string>
+  <string name="filmdetail_activity">Thông Tin Chi Tiết Phim</string>
+  <string name="changepassword_activity">Đổi Mật Khẩu</string>
+  <string name="editMyFilm_activity">Sửa Phim Của Tôi</string>
 
 
-    <string name="upload">Upload</string>
-    <string name="searchHint">Nhập tên phim để tìm kiếm</string>
-    <string name="chonanh">Chọn ảnh</string>
-    <string name="tenphim">Tên phim</string>
-    <string name="theloai">Thể loại</string>
-    <string name="ngayphathanh">Ngày phát hành</string>
-    <string name="mota">Mô tả</string>
-    <string name="taophim">Upload phim</string>
-    <string name="films">Phim</string>
+  <string name="upload">Upload</string>
+  <string name="searchHint">Nhập tên phim để tìm kiếm</string>
+  <string name="chonanh">Chọn ảnh</string>
+  <string name="tenphim">Tên phim</string>
+  <string name="theloai">Thể loại</string>
+  <string name="ngayphathanh">Ngày phát hành</string>
+  <string name="mota">Mô tả</string>
+  <string name="taophim">Upload phim</string>
+  <string name="films">Phim</string>
 
-    <string name="name">Nhập tên của bạn</string>
-    <string name="email">Nhập địa chỉ Email</string>
-    <string name="oldpass">Nhập mật khẩu cũ</string>
-    <string name="password">Nhập mật khẩu</string>
-    <string name="repassword">Nhập lại mật khẩu</string>
-    <string name="newpass">Nhập mật khẩu mới</string>
-    <string name="rnewpass">Nhập lại mật khẩu mới</string>
+  <string name="name">Nhập tên của bạn</string>
+  <string name="email">Nhập địa chỉ Email</string>
+  <string name="oldpass">Nhập mật khẩu cũ</string>
+  <string name="password">Nhập mật khẩu</string>
+  <string name="repassword">Nhập lại mật khẩu</string>
+  <string name="newpass">Nhập mật khẩu mới</string>
+  <string name="rnewpass">Nhập lại mật khẩu mới</string>
 
-    <string name="btnSignin">Đăng Nhập</string>
-    <string name="btnSignup">Đăng Ký</string>
-    <string name="btnChangePass">Đổi Mật Khẩu</string>
-    <string name="btnSignOut">Đăng Xuất</string>
-    <string name="btnResetpw">Đặt Lại Mật Khẩu</string>
-    <string name="btnDelFilm">Xoá Phim</string>
-    <string name="btnEditFilm">Sửa Phim</string>
-    btnDelFilm
+  <string name="btnSignin">Đăng Nhập</string>
+  <string name="btnSignup">Đăng Ký</string>
+  <string name="btnChangePass">Đổi Mật Khẩu</string>
+  <string name="btnSignOut">Đăng Xuất</string>
+  <string name="btnResetpw">Đặt Lại Mật Khẩu</string>
+  <string name="btnDelFilm">Xoá Phim</string>
+  <string name="btnEditFilm">Sửa Phim</string>
 
-    <string-array name="theloai">
-        <item>Hành Động</item>
-        <item>Tâm Lý</item>
-        <item>Kinh Dị</item>
-        <item>Khoa Học Viễn Tưởng</item>
-        <item>Hài</item>
-    </string-array>
+  <string-array name="theloai">
+    <item>Hành Động</item>
+    <item>Tâm Lý</item>
+    <item>Kinh Dị</item>
+    <item>Khoa Học Viễn Tưởng</item>
+    <item>Hài</item>
+  </string-array>
 
-    <!-- Fragment tags -->
-    <string name="fragment_about_tag">About Fragment</string>
-    <string name="fragment_list_tag">List Fragment</string>
-
-    <!-- About text -->
-    <string name="info">Info</string>
-    <string name="about_text">Cinema training project</string>
-
-    <string name="srch">Search</string>
+  <string name="srch">Search</string>
 
 </resources>

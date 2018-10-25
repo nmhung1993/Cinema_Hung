@@ -3,189 +3,189 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layout_signup"
+  <LinearLayout
+      android:id="@+id/layout_signup"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center_vertical"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
+      android:gravity="center"
+      android:orientation="vertical"
+      android:padding="5dp">
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
-        android:orientation="vertical"
+        android:padding="5dp"
+        android:text="ĐĂNG KÝ"
+        android:textSize="40dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         android:padding="5dp">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:gravity="center"
-            android:padding="5dp"
-            android:text="ĐĂNG KÝ"
-            android:textSize="40dp" />
+      <ImageView
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:background="@drawable/ic_user" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_user" />
-
-            <EditText
-                android:id="@+id/name_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_shape_txt"
-                android:ems="10"
-                android:fontFamily="serif"
-                android:hint="@string/name"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:typeface="serif" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_mail" />
-
-            <EditText
-                android:id="@+id/email_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_shape_txt"
-                android:ems="10"
-                android:fontFamily="serif"
-                android:hint="@string/email"
-                android:inputType="textEmailAddress"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:typeface="serif" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_password" />
-
-            <EditText
-                android:id="@+id/password_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_shape_txt"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:fontFamily="serif"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:typeface="serif" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:padding="5dp">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/ic_password" />
-
-            <EditText
-                android:id="@+id/repassword_ed"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/round_shape_txt"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:fontFamily="serif"
-                android:hint="@string/repassword"
-                android:inputType="textPassword"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:typeface="serif" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/btn_lin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:weightSum="2">
-
-            <Button
-                android:id="@+id/btnSignIn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignRight="@id/btn_lin"
-                android:layout_margin="15dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_shape_btn"
-                android:fontFamily="serif"
-                android:lineSpacingExtra="10sp"
-
-                android:text="@string/btnSignin"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:typeface="serif" />
-
-            <Button
-                android:id="@+id/btnSignUp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@id/btn_lin"
-                android:layout_margin="15dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/round_shape_btn"
-                android:fontFamily="serif"
-                android:lineSpacingExtra="10sp"
-                android:text="@string/btnSignup"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:typeface="serif" />
-
-        </LinearLayout>
+      <EditText
+          android:id="@+id/name_ed"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@drawable/round_shape_txt"
+          android:ems="10"
+          android:fontFamily="serif"
+          android:hint="@string/name"
+          android:inputType="textEmailAddress"
+          android:padding="10dp"
+          android:paddingLeft="20dp"
+          android:paddingRight="20dp"
+          android:typeface="serif" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+      <ImageView
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:background="@drawable/ic_mail" />
+
+      <EditText
+          android:id="@+id/email_ed"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@drawable/round_shape_txt"
+          android:ems="10"
+          android:fontFamily="serif"
+          android:hint="@string/email"
+          android:inputType="textEmailAddress"
+          android:padding="10dp"
+          android:paddingLeft="20dp"
+          android:paddingRight="20dp"
+          android:typeface="serif" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+      <ImageView
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:background="@drawable/ic_password" />
+
+      <EditText
+          android:id="@+id/password_ed"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@drawable/round_shape_txt"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:fontFamily="serif"
+          android:hint="@string/password"
+          android:inputType="textPassword"
+          android:padding="10dp"
+          android:paddingLeft="20dp"
+          android:paddingRight="20dp"
+          android:typeface="serif" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="5dp">
+
+      <ImageView
+          android:layout_width="40dp"
+          android:layout_height="40dp"
+          android:background="@drawable/ic_password" />
+
+      <EditText
+          android:id="@+id/repassword_ed"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center_vertical"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:background="@drawable/round_shape_txt"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:fontFamily="serif"
+          android:hint="@string/repassword"
+          android:inputType="textPassword"
+          android:padding="10dp"
+          android:paddingLeft="20dp"
+          android:paddingRight="20dp"
+          android:typeface="serif" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/btn_lin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+      <Button
+          android:id="@+id/btnSignIn"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@id/btn_lin"
+          android:layout_margin="15dp"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/round_shape_btn"
+          android:fontFamily="serif"
+          android:lineSpacingExtra="10sp"
+
+          android:text="@string/btnSignin"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:typeface="serif" />
+
+      <Button
+          android:id="@+id/btnSignUp"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@id/btn_lin"
+          android:layout_margin="15dp"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/round_shape_btn"
+          android:fontFamily="serif"
+          android:lineSpacingExtra="10sp"
+          android:text="@string/btnSignup"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:typeface="serif" />
+
+    </LinearLayout>
+  </LinearLayout>
 </ScrollView>

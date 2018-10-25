@@ -4,181 +4,181 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <android.support.v4.widget.NestedScrollView
+  <!--<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"-->
+  <android.support.v4.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/layout_prf"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="5dp">
 
-        <LinearLayout
-            android:id="@+id/layout_prf"
+      <!--<LinearLayout-->
+      <!--android:layout_width="300dp"-->
+      <!--android:layout_height="300dp"-->
+      <!--android:gravity="center"-->
+      <!--android:background="@drawable/ripple_oval">-->
+      <ImageView
+          android:id="@+id/avatar"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+
+          android:padding="25dp"
+          android:src="@drawable/ic_creator" />
+      <!--</LinearLayout>-->
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:padding="5dp"
+          android:weightSum="5">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_user" />
+
+        <EditText
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="5"
+            android:background="@android:color/transparent"
+            android:enabled="false"
+            android:fontFamily="serif"
+            android:inputType="text"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="name"
+            android:typeface="serif" />
+
+        <ImageView
+            android:id="@+id/btnEdit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/ic_edit" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center_vertical"
+          android:orientation="horizontal"
+          android:padding="5dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_mail" />
+
+        <TextView
+            android:id="@+id/tv_email"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:fontFamily="serif"
+            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:text="email"
+            android:typeface="serif" />
+      </LinearLayout>
 
-            <!--<LinearLayout-->
-            <!--android:layout_width="300dp"-->
-            <!--android:layout_height="300dp"-->
-            <!--android:gravity="center"-->
-            <!--android:background="@drawable/ripple_oval">-->
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginLeft="5dp"
+          android:layout_marginRight="5dp"
+          android:fontFamily="serif"
+          android:gravity="center"
+          android:padding="10dp"
+          android:paddingLeft="20dp"
+          android:paddingRight="20dp"
+          android:text="Phim của tôi:"
+          android:textSize="20dp"
+          android:typeface="serif" />
 
-                android:padding="25dp"
-                android:src="@drawable/ic_creator" />
-            <!--</LinearLayout>-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="5dp"
-                android:weightSum="5">
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="300dp"
+          android:gravity="center_vertical"
+          android:padding="5dp">
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/ic_user" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/my_film_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:padding="5dp"></android.support.v7.widget.RecyclerView>
+      </LinearLayout>
 
-                <EditText
-                    android:enabled="false"
-                    android:inputType="text"
-                    android:id="@+id/tv_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_weight="5"
-                    android:background="@android:color/transparent"
-                    android:fontFamily="serif"
-                    android:padding="10dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="name"
-                    android:typeface="serif" />
+      <LinearLayout
+          android:id="@+id/btn_lin"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:orientation="horizontal"
+          android:weightSum="2">
 
-                <ImageView
-                    android:id="@+id/btnEdit"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/ic_edit" />
-            </LinearLayout>
+        <Button
+            android:id="@+id/btnChangePass"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/btn_lin"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_shape_btn"
+            android:fontFamily="serif"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/btnChangePass"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:typeface="serif" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="5dp">
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@id/btn_lin"
+            android:layout_margin="15dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/round_shape_red_btn"
+            android:fontFamily="serif"
+            android:lineSpacingExtra="10sp"
+            android:text="@string/btnSignOut"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:typeface="serif" />
+      </LinearLayout>
 
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:background="@drawable/ic_mail" />
-
-                <TextView
-                    android:id="@+id/tv_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="5dp"
-                    android:fontFamily="serif"
-                    android:padding="10dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:text="email"
-                    android:typeface="serif" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:fontFamily="serif"
-                android:gravity="center"
-                android:padding="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:text="Phim của tôi:"
-                android:textSize="20dp"
-                android:typeface="serif" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:gravity="center_vertical"
-                android:padding="5dp">
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/my_film_list"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:orientation="horizontal"
-                    android:padding="5dp"></android.support.v7.widget.RecyclerView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/btn_lin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <Button
-                    android:id="@+id/btnChangePass"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignLeft="@id/btn_lin"
-                    android:layout_margin="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_shape_btn"
-                    android:fontFamily="serif"
-                    android:lineSpacingExtra="10sp"
-                    android:text="@string/btnChangePass"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:typeface="serif" />
-
-                <Button
-                    android:id="@+id/btnSignOut"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignRight="@id/btn_lin"
-                    android:layout_margin="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/round_shape_red_btn"
-                    android:fontFamily="serif"
-                    android:lineSpacingExtra="10sp"
-                    android:text="@string/btnSignOut"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:typeface="serif" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btnEditPrf"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/round_shape_btn"
-                android:fontFamily="serif"
-                android:padding="10dp"
-                android:text="Cập nhật tài khoản"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:typeface="serif" />
-        </LinearLayout>
-        <!--</ScrollView>-->
-    </android.support.v4.widget.NestedScrollView>
+      <Button
+          android:id="@+id/btnEditPrf"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/round_shape_btn"
+          android:fontFamily="serif"
+          android:padding="10dp"
+          android:text="Cập nhật tài khoản"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:typeface="serif" />
+    </LinearLayout>
+    <!--</ScrollView>-->
+  </android.support.v4.widget.NestedScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

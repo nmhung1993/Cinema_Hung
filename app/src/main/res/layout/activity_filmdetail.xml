@@ -1,155 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="5dp">
+  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="5dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/name"
-            android:textStyle="bold"
-            android:textSize="30dp"
-            android:textColor="@color/colorPrimary"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingLeft="10dp"
-            android:text="Tên Phim" />
+
+      <TextView
+          android:id="@+id/name"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:layout_weight="1"
+          android:gravity="center"
+          android:paddingLeft="10dp"
+          android:text="Tên Phim"
+          android:textColor="@color/colorPrimary"
+          android:textSize="30dp"
+          android:textStyle="bold" />
+
+      <ImageView
+          android:id="@+id/imgFilm"
+          android:layout_width="400dp"
+          android:layout_height="400dp"
+          android:padding="5dp"
+          android:src="@mipmap/ic_launcher" />
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:weightSum="10">
 
         <ImageView
-            android:id="@+id/imgFilm"
-            android:layout_width="400dp"
-            android:layout_height="400dp"
-            android:padding="5dp"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_film" />
 
-        <LinearLayout
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5.2"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Thể loại"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Thể loại"
+            android:textSize="20dp" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:weightSum="10">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_releasedate" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5.2"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Ngày phát hành"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/releaseDate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="01/01/2018"
+            android:textSize="20dp" />
+      </LinearLayout>
+
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:weightSum="10">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_creator" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5.2"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Người Upload"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/creatorName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp"
+            android:text="Người Upload"
+            android:textSize="20dp" />
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
+            android:gravity="center"
+            android:text="Mô tả:"
+            android:textSize="25dp"
+            android:textStyle="bold" />
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_film" />
-            <TextView
-                android:layout_weight="5.2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="20dp"
-                android:paddingLeft="10dp"
-                android:text="Thể loại" />
-
-            <TextView
-                android:id="@+id/genre"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="Thể loại"
-                android:textSize="20dp" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_releasedate" />
-            <TextView
-                android:layout_weight="5.2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="20dp"
-                android:paddingLeft="10dp"
-                android:text="Ngày phát hành" />
-            <TextView
-                android:id="@+id/releaseDate"
-                android:textSize="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="01/01/2018" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="10">
-
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
-                android:src="@drawable/ic_creator" />
-            <TextView
-                android:layout_weight="5.2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textSize="20dp"
-                android:paddingLeft="10dp"
-                android:text="Người Upload" />
-            <TextView
-                android:id="@+id/creatorName"
-                android:textSize="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="Người Upload" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:textStyle="bold"
-                android:textSize="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Mô tả:" />
-
-            <TextView
-                android:layout_margin="10dp"
-                android:id="@+id/content"
-                android:textSize="20dp"
-                android:padding="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:paddingLeft="10dp"
-                android:text="Content" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:gravity="center_vertical"
+            android:padding="20dp"
+            android:paddingLeft="10dp"
+            android:text="Content"
+            android:textSize="20dp" />
+      </LinearLayout>
 
     </LinearLayout>
 
@@ -161,39 +166,39 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <Button
-            android:id="@+id/btnDelFilm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@id/btn_lin"
-            android:layout_margin="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_shape_red_btn"
-            android:fontFamily="serif"
-            android:lineSpacingExtra="10sp"
-            android:text="@string/btnDelFilm"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:typeface="serif" />
+      <Button
+          android:id="@+id/btnDelFilm"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@id/btn_lin"
+          android:layout_margin="15dp"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/round_shape_red_btn"
+          android:fontFamily="serif"
+          android:lineSpacingExtra="10sp"
+          android:text="@string/btnDelFilm"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:typeface="serif" />
 
-        <Button
-            android:id="@+id/btnEditFilm"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@id/btn_lin"
-            android:layout_margin="15dp"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/round_shape_btn"
-            android:fontFamily="serif"
-            android:lineSpacingExtra="10sp"
-            android:text="@string/btnEditFilm"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            android:typeface="serif" />
+      <Button
+          android:id="@+id/btnEditFilm"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          android:layout_alignRight="@id/btn_lin"
+          android:layout_margin="15dp"
+          android:layout_marginBottom="5dp"
+          android:layout_marginTop="5dp"
+          android:layout_weight="1"
+          android:background="@drawable/round_shape_btn"
+          android:fontFamily="serif"
+          android:lineSpacingExtra="10sp"
+          android:text="@string/btnEditFilm"
+          android:textColor="@color/white"
+          android:textSize="18sp"
+          android:typeface="serif" />
     </LinearLayout>
-</LinearLayout>
+  </LinearLayout>
 </ScrollView>

@@ -1,4 +1,4 @@
-package com.apitiny.administrator.cinema_hung
+package com.apitiny.administrator.hungcinema
 
 import org.junit.Test
 
