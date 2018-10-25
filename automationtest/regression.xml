@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Regression" >
+    <listeners>
+        <listener class-name="utils.TestListener"/>
+    </listeners>
+
+    <test name="shynhhouse">
+        <classes>
+            <!--<class name="tests.BuyTicketTest"/>-->
+            <!--<class name="tests.CreateAccount_LoginLogoutTest"/>-->
+            <!--<class name="tests.SearchEventTest"/>-->
+            <!--<class name="tests.ConversationTest"/>-->
+            <!--<class name="tests.ProfileTest"/>-->
+            <!--<class name="tests.EventTest"/>-->
+        </classes>
+    </test>
+</suite>

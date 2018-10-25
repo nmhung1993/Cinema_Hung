@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Smoke test" >
+    <listeners>
+        <listener class-name="utils.TestListener"/>
+        <listener class-name="test.AnnotationTransformer"/>
+    </listeners>
+
+    <test name="cinema">
+        <classes>
+            <class name="test.LoginTest"></class>
+        </classes>
+    </test>
+</suite>

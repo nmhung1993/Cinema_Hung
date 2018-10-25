@@ -1,0 +1,28 @@
+-------------------------------------------------------------------------------
+Test set: TestSuite
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 29.714 s <<< FAILURE! - in TestSuite
+testLogin(test.LoginTest)  Time elapsed: 0.097 s  <<< FAILURE!
+org.openqa.selenium.InvalidSelectorException: 
+Locator Strategy 'css selector' is not supported for this session
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/invalid_selector_exception.html
+Build info: version: '3.6.0', revision: '6fbf3ec767', time: '2017-09-27T15:28:36.4Z'
+System info: host: 'ADMIN', ip: '192.168.1.204', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_172'
+Driver info: io.appium.java_client.android.AndroidDriver
+Capabilities [{appPackage=com.apitiny.administrator.hungcinema, deviceScreenSize=1080x2280, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=DRGGAM2852901101, platform=LINUX, deviceUDID=DRGGAM2852901101, appActivity=.activity.MainActivity, desired={appPackage=com.apitiny.administrator.hungcinema, appActivity=.activity.MainActivity, automationName=appium, autoGrantPermissions=true, platformName=Android, deviceName=MyAndroid, autoAcceptAlerts=true}, platformVersion=8.1.0, webStorageEnabled=false, locationContextEnabled=false, automationName=appium, takesScreenshot=true, autoGrantPermissions=true, javascriptEnabled=true, deviceModel=Nokia X6, deviceManufacturer=HMD Global, platformName=LINUX, autoAcceptAlerts=true}]
+Session ID: 15431f1b-9806-4bfa-ad35-b09e277ee9d1
+*** Element info: {Using=id, value=btnUpload}
+	at test.LoginTest.testLogin(LoginTest.java:19)
+
+testLogin(test.LoginTest)  Time elapsed: 0.011 s  <<< FAILURE!
+org.openqa.selenium.InvalidSelectorException: 
+Locator Strategy 'css selector' is not supported for this session
+For documentation on this error, please visit: http://seleniumhq.org/exceptions/invalid_selector_exception.html
+Build info: version: '3.6.0', revision: '6fbf3ec767', time: '2017-09-27T15:28:36.4Z'
+System info: host: 'ADMIN', ip: '192.168.1.204', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_172'
+Driver info: io.appium.java_client.android.AndroidDriver
+Capabilities [{appPackage=com.apitiny.administrator.hungcinema, deviceScreenSize=1080x2280, networkConnectionEnabled=true, warnings={}, databaseEnabled=false, deviceName=DRGGAM2852901101, platform=LINUX, deviceUDID=DRGGAM2852901101, appActivity=.activity.MainActivity, desired={appPackage=com.apitiny.administrator.hungcinema, appActivity=.activity.MainActivity, automationName=appium, autoGrantPermissions=true, platformName=Android, deviceName=MyAndroid, autoAcceptAlerts=true}, platformVersion=8.1.0, webStorageEnabled=false, locationContextEnabled=false, automationName=appium, takesScreenshot=true, autoGrantPermissions=true, javascriptEnabled=true, deviceModel=Nokia X6, deviceManufacturer=HMD Global, platformName=LINUX, autoAcceptAlerts=true}]
+Session ID: f6a3410f-3535-473b-a414-e46a1eb8e3f8
+*** Element info: {Using=id, value=btnUpload}
+	at test.LoginTest.testLogin(LoginTest.java:19)
+

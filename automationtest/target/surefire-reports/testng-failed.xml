@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Failed suite [Smoke test]">
+  <listeners>
+    <listener class-name="utils.TestListener"/>
+    <listener class-name="test.AnnotationTransformer"/>
+  </listeners>
+  <test name="cinema(failed)">
+    <classes>
+      <class name="test.LoginTest">
+        <methods>
+          <include name="testLogin"/>
+          <include name="tearDown"/>
+          <include name="setUp"/>
+        </methods>
+      </class> <!-- test.LoginTest -->
+    </classes>
+  </test> <!-- cinema(failed) -->
+</suite> <!-- Failed suite [Smoke test] -->
