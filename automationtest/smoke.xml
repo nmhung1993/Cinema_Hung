@@ -8,7 +8,8 @@
 
     <test name="cinema">
         <classes>
-            <class name="test.LoginTest"></class>
+            <!--<class name="test.SignUp_SignInTest"></class>-->
+            <class name="test.UploadTest"></class>
         </classes>
     </test>
 </suite>
