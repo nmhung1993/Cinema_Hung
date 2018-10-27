@@ -1,6 +1,5 @@
 package com.apitiny.administrator.hungcinema.activity
 
-//import android.widget.SearchView
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color

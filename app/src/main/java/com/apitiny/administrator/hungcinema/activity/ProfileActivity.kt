@@ -88,7 +88,7 @@ class ProfileActivity : AppCompatActivity() {
         .setTextSize(18)
         .apply()
     
-    aDialog.show()
+//    aDialog.show()
     
     userID = prefValue.getVal(application, "userID")
     if (userID != null) {
@@ -133,12 +133,12 @@ class ProfileActivity : AppCompatActivity() {
     }
     
     btnEdit.setOnClickListener {
-      //      tv_name.setSelection(tv_name.getText().length)
-      //      tv_name.setEnabled(true)
-      //      tv_name.requestFocus()
-      //
-      //      showSoftKeyboard(tv_name)
-      //      btnEditPrf.setVisibility(View.VISIBLE)
+            tv_name.setSelection(tv_name.getText().length)
+            tv_name.setEnabled(true)
+            tv_name.requestFocus()
+
+            showSoftKeyboard(tv_name)
+            btnEditPrf.setVisibility(View.VISIBLE)
     }
     
     btnEditPrf.setOnClickListener {
@@ -191,7 +191,7 @@ class ProfileActivity : AppCompatActivity() {
       
       override fun onModel(baseModel: BaseModel) {
         if (baseModel is ListFilmResponse) {
-          aDialog.hide()
+//          aDialog.hide()
           mylistFilm.clear()
           for (i in baseModel.films.indices)
             if (baseModel.films[i].user?._id == userID)
@@ -321,17 +321,25 @@ class ProfileActivity : AppCompatActivity() {
   }
   
   private fun showPictureDialog() {
-    val pictureDialog = android.app.AlertDialog.Builder(this)
-    pictureDialog.setTitle("Đổi Avatar")
-    val pictureDialogItems = arrayOf("Chọn ảnh từ thư viện ảnh", "Chụp ảnh từ camera")
-    pictureDialog.setItems(pictureDialogItems
-    ) { dialog, which ->
-      when (which) {
-        0 -> choosePhotoFromGallary()
-        1 -> takePhotoFromCamera()
-      }
-    }
-    pictureDialog.show()
+    var aiDialog = AwesomeInfoDialog(this)
+        .setTitle("Chọn nguồn ảnh:")
+        .setMessage("")
+        .setPositiveButtonText("Lấy từ thư viện ảnh.")
+        .setNegativeButtonText("Chụp ảnh từ camera.")
+        .setColoredCircle(R.color.colorPrimary)
+        .setDialogIconAndColor(R.drawable.ic_dialog_warning, R.color.white)
+        .setPositiveButtonbackgroundColor(R.color.colorPrimaryLight)
+        .setPositiveButtonTextColor(R.color.white)
+        .setNegativeButtonbackgroundColor(R.color.colorPrimaryDark)
+        .setNegativeButtonTextColor(R.color.white)
+        .setCancelable(true)
+        .setPositiveButtonClick(Closure() {
+          choosePhotoFromGallary()
+        })
+        .setNegativeButtonClick(Closure() {
+          takePhotoFromCamera()
+        })
+    aiDialog.show()
   }
   
   fun choosePhotoFromGallary() {

@@ -29,7 +29,9 @@ import com.apitiny.administrator.hungcinema.api.ApiProvider
 import com.apitiny.administrator.hungcinema.api.ApiResult
 import com.apitiny.administrator.hungcinema.model.BaseModel
 import com.apitiny.administrator.hungcinema.model.FilmModel
+import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
+import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure
 import com.google.gson.JsonObject
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_upload.*
@@ -100,7 +102,7 @@ class UploadActivity : AppCompatActivity() {
     editTextDate.setText(date_n)
     
     editTextDate.setOnClickListener {
-//      editTextDate.isEnabled = false
+      //      editTextDate.isEnabled = false
       openPickerDate()
     }
     
@@ -193,17 +195,25 @@ class UploadActivity : AppCompatActivity() {
   }
   
   private fun showPictureDialog() {
-    val pictureDialog = AlertDialog.Builder(this)
-    pictureDialog.setTitle("Chọn ảnh:")
-    val pictureDialogItems = arrayOf("Chọn từ thư viện ảnh.", "Chụp ảnh từ Camera.")
-    pictureDialog.setItems(pictureDialogItems
-    ) { dialog, which ->
-      when (which) {
-        0 -> choosePhotoFromGallary()
-        1 -> takePhotoFromCamera()
-      }
-    }
-    pictureDialog.show()
+    var aiDialog = AwesomeInfoDialog(this)
+        .setTitle("Chọn nguồn ảnh:")
+        .setMessage("")
+        .setPositiveButtonText("Lấy từ thư viện ảnh.")
+        .setNegativeButtonText("Chụp ảnh từ camera.")
+        .setColoredCircle(R.color.colorPrimary)
+        .setDialogIconAndColor(R.drawable.ic_dialog_warning, R.color.white)
+        .setPositiveButtonbackgroundColor(R.color.colorPrimaryLight)
+        .setPositiveButtonTextColor(R.color.white)
+        .setNegativeButtonbackgroundColor(R.color.colorPrimaryDark)
+        .setNegativeButtonTextColor(R.color.white)
+        .setCancelable(true)
+        .setPositiveButtonClick(Closure() {
+          choosePhotoFromGallary()
+        })
+        .setNegativeButtonClick(Closure() {
+          takePhotoFromCamera()
+        })
+    aiDialog.show()
   }
   
   fun choosePhotoFromGallary() {
