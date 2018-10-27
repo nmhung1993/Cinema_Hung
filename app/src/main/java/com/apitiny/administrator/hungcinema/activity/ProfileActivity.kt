@@ -58,7 +58,7 @@ class ProfileActivity : AppCompatActivity() {
   val mylistFilm: ArrayList<FilmModel> = ArrayList()
   var myfilmAdapter: MyFilmAdapter? = null
   
-  var success: Boolean = false
+  //  var success: Boolean = false
   var avatarURL: String? = ""
   var _userName: String? = ""
   var _token: String? = ""
@@ -88,7 +88,7 @@ class ProfileActivity : AppCompatActivity() {
         .setTextSize(18)
         .apply()
     
-//    aDialog.show()
+    //    aDialog.show()
     
     userID = prefValue.getVal(application, "userID")
     if (userID != null) {
@@ -133,15 +133,16 @@ class ProfileActivity : AppCompatActivity() {
     }
     
     btnEdit.setOnClickListener {
-            tv_name.setSelection(tv_name.getText().length)
-            tv_name.setEnabled(true)
-            tv_name.requestFocus()
-
-            showSoftKeyboard(tv_name)
-            btnEditPrf.setVisibility(View.VISIBLE)
+      tv_name.setSelection(tv_name.getText().length)
+      tv_name.setEnabled(true)
+      tv_name.requestFocus()
+      
+      showSoftKeyboard(tv_name)
+      btnEditPrf.setVisibility(View.VISIBLE)
     }
     
     btnEditPrf.setOnClickListener {
+      var result = 0
       tv_name.clearFocus()
       hideSoftKeyboard()
       aDialog.setProgressBarColor(R.color.colorPrimary).show()
@@ -150,8 +151,9 @@ class ProfileActivity : AppCompatActivity() {
         //                    filesrc == null -> imgsrc = MultipartBody.Part.createFormData("file", "")
         //                    filesrc != null -> imgsrc = MultipartBody.Part.createFormData("file", filesrc?.name, RequestBody.create(MediaType.parse("image/*"), filesrc))
         if (filesrc != null) {
-          uploadAvatar(_token!!, filesrc!!)
-          aDialog.hide()
+          result += 1
+          //          uploadAvatar(_token!!, filesrc!!)
+          //          aDialog.hide()
         }
         if (tv_name.text.toString() == "" || tv_name.text.toString().isEmpty()) {
           tv_name.error = "Không được bỏ trống!"
@@ -160,13 +162,36 @@ class ProfileActivity : AppCompatActivity() {
           tv_name.error = "Bạn cần phải chỉnh sửa tên!"
           aDialog.hide()
         } else if (tv_name.text.toString() != _userName) {
-          val name = tv_name.text.toString()
-          editName(_token!!, name)
-          btnEditPrf.setVisibility(View.INVISIBLE)
-          tv_name.setFocusable(false)
+          result += 2
+//          val name = tv_name.text.toString()
+          //          editName(_token!!, name)
+          //          btnEditPrf.setVisibility(View.INVISIBLE)
+          //          tv_name.setFocusable(false)
         }
-        if (success)
-          Toasty.success(this@ProfileActivity, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT, true).show()
+        when (result) {
+          1 -> {
+            uploadAvatar(_token!!, filesrc!!)
+            aDialog.hide()
+            Toasty.success(this@ProfileActivity, "Đổi hình đại diện thành công!", Toast.LENGTH_SHORT, true).show()
+          }
+          2 -> {
+            editName(_token!!, tv_name.text.toString())
+            aDialog.hide()
+            btnEditPrf.setVisibility(View.INVISIBLE)
+            tv_name.setFocusable(false)
+            Toasty.success(this@ProfileActivity, "Đổi tên thành công!", Toast.LENGTH_SHORT, true).show()
+          }
+          3 -> {
+            uploadAvatar(_token!!, filesrc!!)
+            editName(_token!!, tv_name.text.toString())
+            aDialog.hide()
+            btnEditPrf.setVisibility(View.INVISIBLE)
+            tv_name.setFocusable(false)
+            Toasty.success(this@ProfileActivity, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT, true).show()
+          }
+        }
+        //        if (success)
+        //          Toasty.success(this@ProfileActivity, "Cập nhật thông tin thành công!", Toast.LENGTH_SHORT, true).show()
       }
     }
     
@@ -191,7 +216,7 @@ class ProfileActivity : AppCompatActivity() {
       
       override fun onModel(baseModel: BaseModel) {
         if (baseModel is ListFilmResponse) {
-//          aDialog.hide()
+          //          aDialog.hide()
           mylistFilm.clear()
           for (i in baseModel.films.indices)
             if (baseModel.films[i].user?._id == userID)
@@ -252,7 +277,7 @@ class ProfileActivity : AppCompatActivity() {
       
       override fun onModel(baseModel: BaseModel) {
         if (baseModel is ResponseModel) {
-          success = true
+          //          success = true
           avatarURL = baseModel.isResponse?.avatarURL
           prefValue.delVal(application, "avatarURL")
           prefValue.saveVal(application, "avatarURL", avatarURL)
@@ -280,7 +305,7 @@ class ProfileActivity : AppCompatActivity() {
       
       override fun onModel(baseModel: BaseModel) {
         if (baseModel is ResponseModel) {
-          success = true
+          //          success = true
           prefValue.delVal(application, "username")
           prefValue.saveVal(application, "userName", baseModel.isResponse?.name)
           aDialog.hide()
