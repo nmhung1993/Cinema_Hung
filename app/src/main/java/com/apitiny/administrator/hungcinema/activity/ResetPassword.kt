@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import com.apitiny.administrator.hungcinema.R
 import com.apitiny.administrator.hungcinema.api.ApiProvider
@@ -24,9 +22,7 @@ import kotlinx.android.synthetic.main.activity_resetpassword.*
 
 class ResetPassword : AppCompatActivity() {
   
-  var _emailText: EditText? = null
-  var _btnResetpw: Button? = null
-  lateinit var inputMethodManager: InputMethodManager
+  private lateinit var imm: InputMethodManager
   
   lateinit var aDialog: AwesomeProgressDialog
   
@@ -34,9 +30,9 @@ class ResetPassword : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_resetpassword)
     
-    layout_rspass.setOnTouchListener { v, event -> inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
+    layout_rspass.setOnTouchListener { _, _ -> imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
     
-    inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     
     aDialog = AwesomeProgressDialog(this)
         .setMessage("")
@@ -51,22 +47,19 @@ class ResetPassword : AppCompatActivity() {
         .setTextSize(18)
         .apply()
     
-    _btnResetpw = findViewById(R.id.btnResetpw) as Button
-    _emailText = findViewById(R.id.email_ed) as EditText
-    
-    _btnResetpw!!.setOnClickListener {
-      if (validate()) resetpw()
+    btnResetpw!!.setOnClickListener {
+      if (validate()) resetPw()
     }
     
   }
   
-  fun resetpw() {
+  private fun resetPw() {
     aDialog.show()
     Log.d(TAG, "Reset Password")
     
-    _btnResetpw!!.isEnabled = false
+    btnResetpw!!.isEnabled = false
     
-    val _email = _emailText!!.text.toString()
+    val email = email_ed?.text.toString()
     
     ApiProvider().callApiResetPw(object : ApiResult {
       override fun onError(e: Exception) {
@@ -88,8 +81,8 @@ class ResetPassword : AppCompatActivity() {
       
       override fun onAPIFail() {
         aDialog.hide()
-        _btnResetpw!!.isEnabled = true
-        var aiDialog = AwesomeInfoDialog(this@ResetPassword)
+        btnResetpw!!.isEnabled = true
+        val aiDialog = AwesomeInfoDialog(this@ResetPassword)
             .setTitle("LỖI!")
             .setMessage("Địa chỉ Email không tồn tại!")
             .setColoredCircle(R.color.red_btn)
@@ -100,7 +93,7 @@ class ResetPassword : AppCompatActivity() {
         Log.e("TAG", "Failed horribly")
       }
       
-    }, _email, this)
+    }, email, this)
   }
   
   
@@ -113,13 +106,13 @@ class ResetPassword : AppCompatActivity() {
     }
   }
   
-  fun validate(): Boolean {
+  private fun validate(): Boolean {
     var valid = true
     
-    val email = _emailText!!.text.toString()
+    val email = email_ed!!.text.toString()
     
     if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-      _emailText!!.error = "Địa chỉ Email không đúng!"
+      email_ed!!.error = "Địa chỉ Email không đúng!"
       valid = false
     }
     
@@ -127,7 +120,7 @@ class ResetPassword : AppCompatActivity() {
   }
   
   companion object {
-    private val TAG = "ResetPassword"
-    private val REQUEST_SIGNUP = 0
+    private const val TAG = "ResetPassword"
+    private const val REQUEST_SIGNUP = 0
   }
 }

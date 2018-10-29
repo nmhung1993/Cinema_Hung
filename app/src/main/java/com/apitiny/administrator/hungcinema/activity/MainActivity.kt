@@ -23,27 +23,27 @@ import com.apitiny.administrator.hungcinema.model.FilmModel
 import com.apitiny.administrator.hungcinema.model.ListFilmResponse
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeInfoDialog
 import com.awesomedialog.blennersilva.awesomedialoglibrary.AwesomeProgressDialog
-import com.awesomedialog.blennersilva.awesomedialoglibrary.interfaces.Closure
 import com.google.gson.JsonObject
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 
+@Suppress("NAME_SHADOWING")
 class MainActivity : AppCompatActivity() {
   
-  lateinit var inputMethodManager: InputMethodManager
+  private lateinit var imm: InputMethodManager
   
-  lateinit var aDialog: AwesomeProgressDialog
+  private lateinit var aDialog: AwesomeProgressDialog
   
-  var prefValue = PreferencesHelper(this)
-  private val TAG = "ApiProvider"
+  private var prefValue = PreferencesHelper(this)
+  private val tag = "ApiProvider"
+  private var listFilmSearch: ArrayList<FilmModel> = ArrayList()
   val listFilm: ArrayList<FilmModel> = ArrayList()
-  var listFilmSearch: ArrayList<FilmModel> = ArrayList()
   var filmAdapter: FilmAdapter? = null
   
-  lateinit var mHandler: Handler
-  lateinit var mRunnable: Runnable
+  private lateinit var mHandler: Handler
+  private lateinit var mRunnable: Runnable
   
   
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     
     hideSoftKeyboard()
     
-    inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     
     aDialog = AwesomeProgressDialog(this)
         .setMessage("")
@@ -74,11 +74,11 @@ class MainActivity : AppCompatActivity() {
     
     val resId = R.anim.layout_animation_fall_down
     val animation = AnimationUtils.loadLayoutAnimation(this, resId)
-    rv_film_list.setLayoutAnimation(animation)
+    rv_film_list.layoutAnimation = animation
     
     if (prefValue.getVal(application, "token") == null)
-      btnProfile.setVisibility(View.INVISIBLE)
-    else btnProfile.setVisibility(View.VISIBLE)
+      btnProfile.visibility = View.INVISIBLE
+    else btnProfile.visibility = View.VISIBLE
     
     btnProfile.setOnClickListener {
       val intent = Intent(applicationContext, ProfileActivity::class.java)
@@ -108,10 +108,10 @@ class MainActivity : AppCompatActivity() {
   }
   
   //get List Phim
-  fun getListFilm() {
+  private fun getListFilm() {
     ApiProvider().callApiGetFilmList(object : ApiResult {
       override fun onError(e: Exception) {
-        Log.e(TAG, e.message)
+        Log.e(tag, e.message)
       }
       
       override fun onModel(baseModel: BaseModel) {
@@ -123,25 +123,25 @@ class MainActivity : AppCompatActivity() {
       }
       
       override fun onJson(jsonObject: JsonObject) {
-        Log.e(TAG, "Received a different model")
+        Log.e(tag, "Received a different model")
       }
       
       override fun onAPIFail() {
-        Log.e(TAG, "Failed horribly")
+        Log.e(tag, "Failed horribly")
       }
     })
   }
   
   fun filter(inputText: String?) {
-    var _inputText = inputText
+    var inputText = inputText
     listFilmSearch.clear()
-    if (_inputText == null || _inputText == "") {
+    if (inputText == null || inputText == "") {
       listFilmSearch.addAll(listFilm)
     } else {
-      _inputText = _inputText!!.toLowerCase(Locale.getDefault())
+      inputText = inputText.toLowerCase(Locale.getDefault())
       for (item in listFilm) {
         if (item.name != null) {
-          if (item.name?.toLowerCase()!!.contains(_inputText.toLowerCase()) || item.name!!.contains(_inputText)) {
+          if (item.name?.toLowerCase()!!.contains(inputText.toLowerCase()) || item.name!!.contains(inputText)) {
             listFilmSearch.add(item)
           }
         }
@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity() {
       showSoftKeyboard(searchView)
       searchView.onActionViewExpanded()
       searchView.requestFocus()
-      searchView.setQueryHint(searchHint)
+      searchView.queryHint = searchHint
       searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
         override fun onQueryTextSubmit(query: String?): Boolean {
           return false
@@ -179,7 +179,7 @@ class MainActivity : AppCompatActivity() {
   }
   
   private fun showDialog() {
-    var aiDialog = AwesomeInfoDialog(this)
+    val aiDialog = AwesomeInfoDialog(this)
         .setTitle("ĐĂNG NHẬP")
         .setMessage("Bạn có muốn đăng nhập không?")
         .setPositiveButtonText("Đăng Nhập")
@@ -188,22 +188,22 @@ class MainActivity : AppCompatActivity() {
         .setPositiveButtonbackgroundColor(R.color.colorPrimary)
         .setPositiveButtonTextColor(R.color.white)
         .setCancelable(true)
-        .setPositiveButtonClick(Closure() {
-          val intent = Intent(applicationContext, SigninActivity::class.java)
-          startActivity(intent)
-          overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
-        })
+        .setPositiveButtonClick({
+                                  val intent = Intent(applicationContext, SigninActivity::class.java)
+                                  startActivity(intent)
+                                  overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
+                                })
     aiDialog.show()
   }
   
-  fun hideSoftKeyboard() {
+  private fun hideSoftKeyboard() {
     if (currentFocus != null) {
       val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
       inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
     }
   }
   
-  fun showSoftKeyboard(view: View) {
+  private fun showSoftKeyboard(view: View) {
     val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     view.requestFocus()
     inputMethodManager.showSoftInput(view, 0)
@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
     overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     getListFilm()
     if (prefValue.getVal(application, "token") == null)
-      btnProfile.setVisibility(View.INVISIBLE)
-    else btnProfile.setVisibility(View.VISIBLE)
+      btnProfile.visibility = View.INVISIBLE
+    else btnProfile.visibility = View.VISIBLE
   }
 }

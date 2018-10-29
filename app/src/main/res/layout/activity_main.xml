@@ -1,48 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/swipe_refresh_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/swipe_refresh_layout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
 
   <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-      android:id="@+id/layoutContainer"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="vertical"
-      tools:context="com.apitiny.administrator.hungcinema.activity.MainActivity">
+    android:id="@+id/layoutContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.apitiny.administrator.hungcinema.activity.MainActivity">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_film_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layoutAnimation="@anim/layout_animation_fall_down">
+      android:id="@+id/rv_film_list"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_alignParentStart="true"
+      android:layout_alignParentTop="true"
+      android:layoutAnimation="@anim/layout_animation_fall_down">
 
     </android.support.v7.widget.RecyclerView>
 
     <ImageButton
 
-        android:id="@+id/btnUpload"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignBottom="@id/rv_film_list"
-        android:layout_alignEnd="@id/rv_film_list"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/ic_add"
-        android:elevation="8dp" />
+      android:id="@+id/btnUpload"
+      android:layout_width="75dp"
+      android:layout_height="75dp"
+      android:layout_alignBottom="@id/rv_film_list"
+      android:layout_alignEnd="@id/rv_film_list"
+      android:layout_marginBottom="16dp"
+      android:layout_marginEnd="16dp"
+      android:background="@drawable/ic_add"
+      android:elevation="8dp" />
 
     <ImageButton
-        android:id="@+id/btnProfile"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:layout_alignBottom="@id/rv_film_list"
-        android:layout_alignStart="@id/rv_film_list"
-        android:layout_marginBottom="16dp"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/ic_people" />
+      android:id="@+id/btnProfile"
+      android:layout_width="75dp"
+      android:layout_height="75dp"
+      android:layout_alignBottom="@id/rv_film_list"
+      android:layout_alignStart="@id/rv_film_list"
+      android:layout_marginBottom="16dp"
+      android:layout_marginStart="16dp"
+      android:background="@drawable/ic_people" />
 
   </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

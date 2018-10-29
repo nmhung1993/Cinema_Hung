@@ -10,7 +10,6 @@
   <string name="editMyFilm_activity">Sửa Phim Của Tôi</string>
 
 
-  <string name="upload">Upload</string>
   <string name="searchHint">Nhập tên phim để tìm kiếm</string>
   <string name="chonanh">Chọn ảnh</string>
   <string name="tenphim">Tên phim</string>
@@ -18,7 +17,6 @@
   <string name="ngayphathanh">Ngày phát hành</string>
   <string name="mota">Mô tả</string>
   <string name="taophim">Upload phim</string>
-  <string name="films">Phim</string>
 
   <string name="name">Nhập tên của bạn</string>
   <string name="email">Nhập địa chỉ Email</string>

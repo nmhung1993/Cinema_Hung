@@ -8,9 +8,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import com.apitiny.administrator.hungcinema.PreferencesHelper
 import com.apitiny.administrator.hungcinema.R
@@ -27,23 +24,19 @@ import kotlinx.android.synthetic.main.activity_signin.*
 
 class SigninActivity : AppCompatActivity() {
   
-  lateinit var inputMethodManager: InputMethodManager
+  private lateinit var imm: InputMethodManager
   
   lateinit var aDialog: AwesomeProgressDialog
   
   var preferencesHelper = PreferencesHelper(this@SigninActivity)
-  var _emailText: EditText? = null
-  var _passwordText: EditText? = null
-  var _signinButton: Button? = null
-  var _signupButton: Button? = null
   
   public override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_signin)
     
-    layout_signin.setOnTouchListener { v, event -> inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
+    layout_signin.setOnTouchListener { _, _ -> imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
     
-    inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     
     aDialog = AwesomeProgressDialog(this)
         .setMessage("")
@@ -58,25 +51,19 @@ class SigninActivity : AppCompatActivity() {
         .setTextSize(18)
         .apply()
     
-    _signinButton = findViewById(R.id.btnSignin) as Button
-    _signupButton = findViewById(R.id.btnSignup) as Button
-    _passwordText = findViewById(R.id.password_ed) as EditText
-    _emailText = findViewById(R.id.email_ed) as EditText
-    
-    val _rspwbtn = findViewById(R.id.resetpassword) as LinearLayout
-    _rspwbtn.setOnClickListener {
+    resetpassword.setOnClickListener {
       startActivity(Intent(this@SigninActivity, ResetPassword::class.java))
       finish()
     }
-    _signinButton!!.setOnClickListener {
-      inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+    btnSignin.setOnClickListener {
+      imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
       if (validate()) {
         aDialog.show()
         login()
       }
     }
     
-    _signupButton!!.setOnClickListener {
+    btnSignup.setOnClickListener {
       val intent = Intent(applicationContext, SignUpActivity::class.java)
       startActivityForResult(intent, REQUEST_SIGNUP)
       finish()
@@ -84,11 +71,11 @@ class SigninActivity : AppCompatActivity() {
     }
   }
   
-  fun login() {
+  private fun login() {
     Log.d(TAG, "Login")
     
-    val _email = _emailText!!.text.toString()
-    val _password = _passwordText!!.text.toString()
+    val email = email_ed!!.text.toString()
+    val password = password_ed!!.text.toString()
     
     ApiProvider().callApiSignin(object : ApiResult {
       override fun onError(e: Exception) {
@@ -99,11 +86,13 @@ class SigninActivity : AppCompatActivity() {
         if (baseModel is ResponseModel) {
           
           // save token on preferences
-          preferencesHelper.saveVal(application, "token", baseModel.isToken)
-          preferencesHelper.saveVal(application, "userID", baseModel.isUser!!._id)
-          preferencesHelper.saveVal(application, "userEmail", baseModel.isUser!!.email)
-          preferencesHelper.saveVal(application, "userName", baseModel.isUser!!.name)
-          preferencesHelper.saveVal(application, "avatarURL", baseModel.isUser!!.avatarURL)
+          preferencesHelper.run {
+            saveVal(application, "token", baseModel.isToken)
+            saveVal(application, "userId", baseModel.isUser!!._id)
+            saveVal(application, "userEmail", baseModel.isUser!!.email)
+            saveVal(application, "userName", baseModel.isUser!!.name)
+            saveVal(application, "avatarURL", baseModel.isUser!!.avatarURL)
+          }
           
           Toasty.success(this@SigninActivity, "Đăng nhập thành công!", Toast.LENGTH_SHORT, true).show()
           startActivity(Intent(this@SigninActivity, MainActivity::class.java))
@@ -117,7 +106,7 @@ class SigninActivity : AppCompatActivity() {
       
       override fun onAPIFail() {
         aDialog.hide()
-        var aiDialog = AwesomeInfoDialog(this@SigninActivity)
+        val aiDialog = AwesomeInfoDialog(this@SigninActivity)
             .setTitle("Lỗi")
             .setMessage("Sai tài khoản Email hoặc mật khẩu!!!")
             .setColoredCircle(R.color.red_btn)
@@ -126,7 +115,7 @@ class SigninActivity : AppCompatActivity() {
         aiDialog.show()
         Log.e("TAG", "Failed horribly")
       }
-    }, _email, _password, this)
+    }, email, password, this)
     
     android.os.Handler().postDelayed({ onLoginSuccess() }, 3000)
   }
@@ -145,25 +134,21 @@ class SigninActivity : AppCompatActivity() {
   //        moveTaskToBack(true)
   //    }
   
-  fun onLoginSuccess() {
-    _signinButton!!.isEnabled = true
+  private fun onLoginSuccess() {
+    btnSignin!!.isEnabled = true
   }
   
-  fun onLoginFailed() {
-    _signinButton!!.isEnabled = true
-  }
-  
-  fun validate(): Boolean {
+  private fun validate(): Boolean {
     var valid = true
     
-    val email = _emailText!!.text.toString()
-    val password = _passwordText!!.text.toString()
+    val email = email_ed!!.text.toString()
+    val password = password_ed!!.text.toString()
     
     if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-      _emailText!!.error = "Địa chỉ Email không đúng!"
+      email_ed!!.error = "Địa chỉ Email không đúng!"
       valid = false
     } else if (password.isEmpty() || password.length < 4 || password.length > 10) {
-      _passwordText!!.error = "Mật khẩu phải từ 4 đến 10 kí tự"
+      password_ed!!.error = "Mật khẩu phải từ 4 đến 10 kí tự"
       valid = false
     }
     
@@ -171,7 +156,7 @@ class SigninActivity : AppCompatActivity() {
   }
   
   companion object {
-    private val TAG = "LoginActivity"
-    private val REQUEST_SIGNUP = 0
+    private const val TAG = "LoginActivity"
+    private const val REQUEST_SIGNUP = 0
   }
 }

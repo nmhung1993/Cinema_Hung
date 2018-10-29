@@ -11,7 +11,7 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
 
 class ApiProvider {
-  private val TAG = "ApiProvider"
+  private val tag = "ApiProvider"
   
   private val mApiServiceNetwork = ApiServiceNetwork.getInstance()
   
@@ -23,21 +23,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<ListFilmResponse>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(getFilm: ListFilmResponse) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(getFilm)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -51,21 +51,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<FilmDetailModel>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(getFilm: FilmDetailModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(getFilm)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -83,17 +83,17 @@ class ApiProvider {
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(postFilm: FilmModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(postFilm)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -107,21 +107,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<ResponseModel>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(signUp: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(signUp)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -136,21 +136,21 @@ class ApiProvider {
           .subscribe(object : Subscriber<ResponseModel>() {
             val errMsg: String? = null
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(signIn: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(signIn)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -164,21 +164,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<ResponseModel>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(resetPw: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(resetPw)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -192,21 +192,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<ResponseModel>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(changPw: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(changPw)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
   }
@@ -219,21 +219,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<ResponseModel>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(editName: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(editName)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -253,19 +253,19 @@ class ApiProvider {
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(postAvatar: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(postAvatar)
             }
             
             
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
   }
@@ -278,21 +278,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<User>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(userInfo: User) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(userInfo)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
   }
@@ -309,17 +309,17 @@ class ApiProvider {
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(postEditFilm: FilmModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(postEditFilm)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     
@@ -333,21 +333,21 @@ class ApiProvider {
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe(object : Subscriber<ResponseModel>() {
             override fun onCompleted() {
-              Log.e(TAG, "onCompleted")
+              Log.e(tag, "onCompleted")
             }
             
             override fun onError(e: Throwable) {
-              Log.e(TAG, "onError" + Log.getStackTraceString(e))
+              Log.e(tag, "onError" + Log.getStackTraceString(e))
               apiResult.onAPIFail()
             }
             
             override fun onNext(editFilm: ResponseModel) {
-              Log.i(TAG, "onNext")
+              Log.i(tag, "onNext")
               apiResult.onModel(editFilm)
             }
           })
     } catch (e: Exception) {
-      Log.e(TAG, "Exception" + Log.getStackTraceString(e))
+      Log.e(tag, "Exception" + Log.getStackTraceString(e))
       apiResult.onError(e)
     }
     

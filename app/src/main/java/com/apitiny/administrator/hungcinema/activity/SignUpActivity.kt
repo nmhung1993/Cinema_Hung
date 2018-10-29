@@ -7,8 +7,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import com.apitiny.administrator.hungcinema.PreferencesHelper
 import com.apitiny.administrator.hungcinema.R
@@ -24,16 +22,9 @@ import kotlinx.android.synthetic.main.acitivity_signup.*
 
 class SignUpActivity : AppCompatActivity() {
   
-  var preferencesHelper = PreferencesHelper(this)
+  var prfHelper = PreferencesHelper(this)
   
-  var _emailText: EditText? = null
-  var _nameText: EditText? = null
-  var _passwordText: EditText? = null
-  var _reEnterPasswordText: EditText? = null
-  var _signupButton: Button? = null
-  var _signinButton: Button? = null
-  
-  lateinit var inputMethodManager: InputMethodManager
+  private lateinit var imm: InputMethodManager
   
   lateinit var aDialog: AwesomeProgressDialog
   
@@ -41,9 +32,9 @@ class SignUpActivity : AppCompatActivity() {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.acitivity_signup)
     
-    layout_signup.setOnTouchListener { v, event -> inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
+    layout_signup.setOnTouchListener { _, _ -> imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS) }
     
-    inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     
     aDialog = AwesomeProgressDialog(this)
         .setMessage("")
@@ -58,15 +49,7 @@ class SignUpActivity : AppCompatActivity() {
         .setTextSize(18)
         .apply()
     
-    _emailText = findViewById(R.id.email_ed) as EditText
-    _nameText = findViewById(R.id.name_ed) as EditText
-    _passwordText = findViewById(R.id.password_ed) as EditText
-    _reEnterPasswordText = findViewById(R.id.repassword_ed) as EditText
-    
-    _signupButton = findViewById(R.id.btnSignUp) as Button
-    _signinButton = findViewById(R.id.btnSignIn) as Button
-    
-    _signupButton!!.setOnClickListener {
+    btnSignUp!!.setOnClickListener {
       if (validate()) {
         aDialog.show()
         hideSoftKeyboard()
@@ -74,7 +57,7 @@ class SignUpActivity : AppCompatActivity() {
       }
     }
     
-    _signinButton!!.setOnClickListener {
+    btnSignIn!!.setOnClickListener {
       val intent = Intent(applicationContext, SigninActivity::class.java)
       startActivity(intent)
       finish()
@@ -82,12 +65,12 @@ class SignUpActivity : AppCompatActivity() {
     }
   }
   
-  fun signup() {
+  private fun signup() {
     Log.d(TAG, "Signup")
     
-    val _email = _emailText!!.text.toString()
-    val _name = _nameText!!.text.toString()
-    val _password = _passwordText!!.text.toString()
+    val email = email_ed?.text.toString()
+    val name = name_ed?.text.toString()
+    val password = password_ed?.text.toString()
     
     ApiProvider().callApiSignup(object : ApiResult {
       override fun onError(e: Exception) {
@@ -96,10 +79,12 @@ class SignUpActivity : AppCompatActivity() {
       
       override fun onModel(baseModel: BaseModel) {
         if (baseModel is ResponseModel) {
-          preferencesHelper.saveVal(application, "token", baseModel.isToken)
-          preferencesHelper.saveVal(application, "userID", baseModel.isUser!!._id)
-          preferencesHelper.saveVal(application, "userName", baseModel.isUser!!.name)
-          preferencesHelper.saveVal(application, "userEmail", baseModel.isUser!!.email)
+          prfHelper.run {
+            saveVal(application, "token", baseModel.isToken)
+            saveVal(application, "userId", baseModel.isUser!!._id)
+            saveVal(application, "userName", baseModel.isUser!!.name)
+            saveVal(application, "userEmail", baseModel.isUser!!.email)
+          }
           Toasty.success(this@SignUpActivity, "Đăng ký thành công!", Toast.LENGTH_SHORT, true).show()
           startActivity(Intent(this@SignUpActivity, MainActivity::class.java))
           finish()
@@ -112,7 +97,7 @@ class SignUpActivity : AppCompatActivity() {
       
       override fun onAPIFail() {
         aDialog.hide()
-        var aiDialog = AwesomeInfoDialog(this@SignUpActivity)
+        val aiDialog = AwesomeInfoDialog(this@SignUpActivity)
             .setTitle("LỖI!!!")
             .setMessage("Email này đã có người sử dụng?")
             .setColoredCircle(R.color.red_btn)
@@ -121,34 +106,34 @@ class SignUpActivity : AppCompatActivity() {
         aiDialog.show()
         Log.e("TAG", "Failed horribly")
       }
-    }, _name, _email, _password, this)
+    }, name, email, password, this)
   }
   
-  fun validate(): Boolean {
+  private fun validate(): Boolean {
     var valid = true
     
-    val email = _emailText!!.text.toString()
-    val name = _nameText!!.text.toString()
-    val password = _passwordText!!.text.toString()
-    val reEnterPassword = _reEnterPasswordText!!.text.toString()
+    val email = email_ed!!.text.toString()
+    val name = name_ed!!.text.toString()
+    val password = password_ed!!.text.toString()
+    val reEnterPassword = repassword_ed!!.text.toString()
     
     if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-      _emailText!!.error = "Địa chỉ Email không đúng!"
+      email_ed!!.error = "Địa chỉ Email không đúng!"
       valid = false
     } else if (name.isEmpty()) {
-      _nameText!!.error = "Bạn phải nhập tên của bạn."
+      name_ed!!.error = "Bạn phải nhập tên của bạn."
       valid = false
     } else if (password.isEmpty() || password.length < 4 || password.length > 10) {
-      _passwordText!!.error = "Mật khẩu phải dài từ 4 đến 10 kí tự"
+      password_ed!!.error = "Mật khẩu phải dài từ 4 đến 10 kí tự"
       valid = false
     } else if (reEnterPassword.isEmpty() || reEnterPassword.length < 4 || reEnterPassword.length > 10 || reEnterPassword != password) {
-      _reEnterPasswordText!!.error = "Mật khẩu không trùng!!"
+      repassword_ed!!.error = "Mật khẩu không trùng!!"
       valid = false
     }
     return valid
   }
   
-  fun hideSoftKeyboard() {
+  private fun hideSoftKeyboard() {
     if (currentFocus != null) {
       val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
       inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)

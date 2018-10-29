@@ -1,9 +1,8 @@
 package com.apitiny.administrator.hungcinema.activity
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -17,10 +16,8 @@ import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import com.apitiny.administrator.hungcinema.PreferencesHelper
@@ -48,38 +45,34 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class EditMyFilm : AppCompatActivity() {
   
-  lateinit var inputMethodManager: InputMethodManager
-  lateinit var aDialog: AwesomeProgressDialog
+  private lateinit var imm: InputMethodManager
+  private lateinit var aDialog: AwesomeProgressDialog
   
-  var prefID = PreferencesHelper(this)
+  private var prefID = PreferencesHelper(this)
+  private var prefValue = PreferencesHelper(this)
+  private var fileSrc: File? = null
   
-  var prefValue = PreferencesHelper(this)
+  var btnChonAnh: Button? = null
+  var btnUp: Button? = null
+  var imgFilm: ImageView? = null
   
-  var filesrc: File? = null
+  private val gallery = 1
+  private val camera = 2
   
-  var btnchonanh: Button? = null
-  var btnupload: Button? = null
-  var imgfilm: ImageView? = null
-  
-  private val GALLERY = 1
-  private val CAMERA = 2
-  
-  lateinit var editTextDate: EditText
-  lateinit var _nameED: EditText
-  lateinit var _contentED: EditText
-  
+  @SuppressLint("SimpleDateFormat")
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_upload)
     
-    inputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
     
     aDialog = AwesomeProgressDialog(this)
         .setMessage("")
         .setTitle("")
-        .setDialogBodyBackgroundColor(R.color.float_transparent)
+        //        .setDialogBodyBackgroundColor(R.color.float_transparent)
         .setColoredCircle(R.color.colorPrimary)
         .setCancelable(false)
     
@@ -89,120 +82,114 @@ class EditMyFilm : AppCompatActivity() {
         .setTextSize(18)
         .apply()
     
-    val _token = prefValue.getVal(application, "token")
-    val _name = intent.getStringExtra("filmName")
-    val _genre = intent.getStringExtra("filmGenre")
-    val _releasedate = intent.getStringExtra("filmReleaseDate")
-    val _content = intent.getStringExtra("filmContent")
-    val _posterURL = intent.getStringExtra("filmPoster")
-    val _id = intent.getStringExtra("filmID")
-    val _creatorId = intent.getStringExtra("creatorId")
-    
-    _nameED = findViewById(R.id.name_ed) as EditText
-    _contentED = findViewById(R.id.content_ed) as EditText
-    btnchonanh = findViewById<View>(R.id.btnChonAnh) as Button
-    imgfilm = findViewById<View>(R.id.imgFilm) as ImageView
-    btnupload = findViewById<View>(R.id.btnUp) as Button
-    editTextDate = findViewById(R.id.releaseDate_ed)
-    
-    _nameED.setText(_name)
-    _contentED.setText(_content)
-    editTextDate.setText(_releasedate)
+    val token = prefValue.getVal(application, "token")
+    var creatorId = prefID.getVal(application, "userId")
+    var name = intent.getStringExtra("filmName")
+    var genre: String
+    var releaseDate = intent.getStringExtra("filmReleaseDate")
+    var content = intent.getStringExtra("filmContent")
+    val posterURL = intent.getStringExtra("filmPoster")
+    val id = intent.getStringExtra("filmID")
     
     
-    Glide.with(this@EditMyFilm)
-        .load("https://cinema-hatin.herokuapp.com" + _posterURL)
-        .apply(RequestOptions().placeholder(R.drawable.ic_defaultmv))
-        .into(imgfilm!!)
+    name_ed.setText(name)
+    content_ed.setText(content)
+    releaseDate_ed.setText(releaseDate)
     
-    btnchonanh!!.setOnClickListener { showPictureDialog() }
-    btnupload!!.setOnClickListener {
+    imgFilm?.let {
+      Glide.with(this@EditMyFilm)
+          .load("https://cinema-hatin.herokuapp.com$posterURL")
+          .apply(RequestOptions().placeholder(R.drawable.ic_defaultmv))
+          .into(it)
+    }
+    
+    btnChonAnh?.setOnClickListener { showPictureDialog() }
+    btnUp?.setOnClickListener {
       
-      inputMethodManager.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+      imm.hideSoftInputFromWindow(currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
       
-      val _name = name_ed.text.toString()
-      val _genre = genre_sp.getSelectedItem().toString()
-      val _releaseDate = releaseDate_ed.text.toString()
-      val _content = content_ed.text.toString()
-      var _creatorId = prefID.getVal(application, "userID")
+      name = name_ed.text.toString()
+      genre = genre_sp.selectedItem.toString()
+      releaseDate = releaseDate_ed.text.toString()
+      content = content_ed.text.toString()
+      
       
       val df: DateFormat = SimpleDateFormat("dd/MM/yyyy")
-      var milisec: String = ""
+      var milisec = ""
       //chuyển đổi ngày sang mili giây
       try {
-        val d: Date = df.parse(_releaseDate)
+        val d: Date = df.parse(releaseDate)
         val l: Long = d.time
         milisec = l.toString()
       } catch (e: ParseException) {
         e.printStackTrace()
       }
       
-      if (validate(_name, _content, filesrc)) {
-        btnupload!!.isEnabled = false
+      if (validate(name, content)) {
+        btnUp!!.isEnabled = false
         aDialog.show()
-        if (_creatorId == null || _creatorId == "")
-          _creatorId = ""
-        if (_token != null) {
-          uploadPhim(_token, _name, _genre, milisec, _content, _creatorId, _id)
-        }
+        if (creatorId == null)
+          creatorId = ""
+        if (token != null) uploadPhim(token, name, genre, milisec, content, creatorId!!, id)
       }
       
     }
     
   }
   
-  fun validate(name: String, content: String, file: File?): Boolean {
+  private fun validate(name: String, content: String): Boolean {
     var valid = true
     
-    if (name!!.isEmpty()) {
-      name_ed!!.error = "Tên phim không được bỏ trống!"
+    if (name.isEmpty()) {
+      name_ed.error = "Tên phim không được bỏ trống!"
       valid = false
     } else if (content.isEmpty()) {
-      content_ed!!.error = "Vui lòng nhập mô tả phim"
+      content_ed.error = "Vui lòng nhập mô tả phim"
       valid = false
     }
     return valid
   }
   
-  fun uploadPhim(_token: String, name: String, genre: String, releaseDate: String, content: String, creatorId: String, id: String) {
+  private fun uploadPhim(_token: String, name: String, genre: String, releaseDate: String, content: String, creatorId: String, id: String) {
     
-    var imgsrc: MultipartBody.Part? = null
-    var hashMap = HashMap<String, RequestBody>()
+    val imgSrc: MultipartBody.Part? = if (fileSrc != null) {
+      MultipartBody.Part.createFormData("file", fileSrc?.name, RequestBody.create(MediaType.parse("image/*"), fileSrc))
+    } else MultipartBody.Part.createFormData("file", "")
+    val hashMap = HashMap<String, RequestBody>()
     
-    hashMap.put("name", RequestBody.create(MediaType.parse("text/plain"), name))
-    hashMap.put("genre", RequestBody.create(MediaType.parse("text/plain"), genre))
-    hashMap.put("releaseDate", RequestBody.create(MediaType.parse("text/plain"), releaseDate))
-    hashMap.put("content", RequestBody.create(MediaType.parse("text/plain"), content))
-    hashMap.put("creatorId", RequestBody.create(MediaType.parse("text/plain"), creatorId))
-    hashMap.put("id", RequestBody.create(MediaType.parse("text/plain"), id))
+    hashMap["name"] = RequestBody.create(MediaType.parse("text/plain"), name)
+    hashMap["genre"] = RequestBody.create(MediaType.parse("text/plain"), genre)
+    hashMap["releaseDate"] = RequestBody.create(MediaType.parse("text/plain"), releaseDate)
+    hashMap["content"] = RequestBody.create(MediaType.parse("text/plain"), content)
+    hashMap["creatorId"] = RequestBody.create(MediaType.parse("text/plain"), creatorId)
+    hashMap["id"] = RequestBody.create(MediaType.parse("text/plain"), id)
     
-    if (filesrc != null) {
-      imgsrc = MultipartBody.Part.createFormData("file", filesrc?.name, RequestBody.create(MediaType.parse("image/*"), filesrc))
-    } else imgsrc = MultipartBody.Part.createFormData("file", "")
     //val progressDialog = AlertDialog.Builder(this)
-    ApiProvider().callApiEditFilm(object : ApiResult {
-      override fun onError(e: Exception) {
-        Log.e("TAG", e.message)
-      }
-      
-      override fun onModel(baseModel: BaseModel) {
-        if (baseModel is FilmModel) {
-          Toasty.success(this@EditMyFilm, "Sửa phim thành công!", Toast.LENGTH_SHORT, true).show()
-          startActivity(Intent(this@EditMyFilm, MainActivity::class.java))
-          finish()
-          overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
+    if (imgSrc != null) {
+      ApiProvider().callApiEditFilm(object : ApiResult {
+        override fun onError(e: Exception) {
+          Log.e("TAG", e.message)
         }
-      }
-      
-      override fun onJson(jsonObject: JsonObject) {
-        Log.e("TAG", "Received a different model")
-      }
-      
-      override fun onAPIFail() {
-        Log.e("TAG", "Failed horribly")
-      }
-      
-    }, _token, hashMap, imgsrc, this)
+        
+        override fun onModel(baseModel: BaseModel) {
+          if (baseModel is FilmModel) {
+            Toasty.success(this@EditMyFilm, "Sửa phim thành công!", Toast.LENGTH_SHORT, true).show()
+            startActivity(Intent(this@EditMyFilm, MainActivity::class.java))
+            finish()
+            overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out)
+          }
+        }
+        
+        override fun onJson(jsonObject: JsonObject) {
+          Log.e("TAG", "Received a different model")
+        }
+        
+        override fun onAPIFail() {
+          Log.e("TAG", "Failed horribly")
+        }
+        
+      }, _token, hashMap, imgSrc, this)
+    }
   }
   
   private fun showPictureDialog() {
@@ -210,7 +197,7 @@ class EditMyFilm : AppCompatActivity() {
     pictureDialog.setTitle("Chọn ảnh:")
     val pictureDialogItems = arrayOf("Chọn từ thư viện ảnh.", "Chụp ảnh từ Camera.")
     pictureDialog.setItems(pictureDialogItems
-    ) { dialog, which ->
+    ) { _, which ->
       when (which) {
         0 -> choosePhotoFromGallary()
         1 -> takePhotoFromCamera()
@@ -219,11 +206,11 @@ class EditMyFilm : AppCompatActivity() {
     pictureDialog.show()
   }
   
-  fun choosePhotoFromGallary() {
+  private fun choosePhotoFromGallary() {
     val galleryIntent = Intent(Intent.ACTION_PICK,
                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
     
-    startActivityForResult(galleryIntent, GALLERY)
+    startActivityForResult(galleryIntent, gallery)
   }
   
   private fun takePhotoFromCamera() {
@@ -234,7 +221,7 @@ class EditMyFilm : AppCompatActivity() {
       makeRequest()
     } else {
       val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-      startActivityForResult(intent, CAMERA)
+      startActivityForResult(intent, camera)
     }
   }
   
@@ -254,23 +241,23 @@ class EditMyFilm : AppCompatActivity() {
           Log.i("TAG", "Permission has been denied by user")
         } else {
           val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-          startActivityForResult(intent, CAMERA)
+          startActivityForResult(intent, camera)
         }
       }
     }
   }
   
-  fun openPickerDate(view: View) {
-    val c = Calendar.getInstance()
-    val year = c.get(Calendar.YEAR)
-    val month = c.get(Calendar.MONTH) + 1
-    val day = c.get(Calendar.DAY_OF_MONTH)
-    
-    val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-      editTextDate.setText("" + dayOfMonth + "/" + month + "/" + year)
-    }, year, month, day)
-    dpd.show()
-  }
+  //  fun openPickerDate(view: View) {
+  //    val c = Calendar.getInstance()
+  //    val year = c.get(Calendar.YEAR)
+  //    val month = c.get(Calendar.MONTH) + 1
+  //    val day = c.get(Calendar.DAY_OF_MONTH)
+  //
+  //    val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+  //      releaseDate_ed.setText("" + dayOfMonth + "/" + month + "/" + year)
+  //    }, year, month, day)
+  //    dpd.show()
+  //  }
   
   
   public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -280,14 +267,14 @@ class EditMyFilm : AppCompatActivity() {
      {
      return
      }*/
-    if (requestCode == GALLERY) {
+    if (requestCode == gallery) {
       if (data != null) {
-        val contentURI = data!!.data
+        val contentURI = data.data
         try {
           val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, contentURI)
-          val path = saveImage(bitmap)
+          saveImage(bitmap)
           Toasty.success(this@EditMyFilm, "Chọn ảnh thành công!", Toast.LENGTH_SHORT, true).show()
-          imgfilm!!.setImageBitmap(bitmap)
+          imgFilm!!.setImageBitmap(bitmap)
           
         } catch (e: IOException) {
           e.printStackTrace()
@@ -296,17 +283,19 @@ class EditMyFilm : AppCompatActivity() {
         
       }
       
-    } else if (requestCode == CAMERA) {
-      if (data!!.extras != null) {
-        val thumbnail = data!!.extras!!.get("data") as Bitmap
-        imgfilm!!.setImageBitmap(thumbnail)
-        saveImage(thumbnail)
-        Toasty.success(this@EditMyFilm, "Chụp và lưu ảnh thành công!", Toast.LENGTH_SHORT, true).show()
+    } else if (requestCode == camera) {
+      if (data != null) {
+        if (data.extras != null) {
+          val thumbnail = data.extras!!.get("data") as Bitmap
+          imgFilm!!.setImageBitmap(thumbnail)
+          saveImage(thumbnail)
+          Toasty.success(this@EditMyFilm, "Chụp và lưu ảnh thành công!", Toast.LENGTH_SHORT, true).show()
+        }
       }
     }
   }
   
-  fun saveImage(myBitmap: Bitmap): String {
+  private fun saveImage(myBitmap: Bitmap): String {
     val bytes = ByteArrayOutputStream()
     myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
     val wallpaperDirectory = File(
@@ -320,18 +309,18 @@ class EditMyFilm : AppCompatActivity() {
     try {
       Log.d("heel", wallpaperDirectory.toString())
       val f = File(wallpaperDirectory, ((Calendar.getInstance()
-          .getTimeInMillis()).toString() + ".jpg"))
+          .timeInMillis).toString() + ".jpg"))
       f.createNewFile()
       val fo = FileOutputStream(f)
       fo.write(bytes.toByteArray())
       MediaScannerConnection.scanFile(this,
-                                      arrayOf(f.getPath()),
+                                      arrayOf(f.path),
                                       arrayOf("image/jpeg"), null)
       fo.close()
-      filesrc = f
-      Log.d("TAG", "File Saved::--->" + f.getAbsolutePath())
+      fileSrc = f
+      Log.d("TAG", "File Saved::--->" + f.absolutePath)
       
-      return f.getAbsolutePath()
+      return f.absolutePath
     } catch (e1: IOException) {
       e1.printStackTrace()
     }
@@ -340,6 +329,6 @@ class EditMyFilm : AppCompatActivity() {
   }
   
   companion object {
-    private val IMAGE_DIRECTORY = "/apitiny"
+    private const val IMAGE_DIRECTORY = "/apitiny"
   }
 }
